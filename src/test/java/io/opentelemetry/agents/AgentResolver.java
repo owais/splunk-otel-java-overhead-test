@@ -24,7 +24,7 @@ public class AgentResolver {
     if(Agent.NONE.equals(agent)){
       return Optional.empty();
     }
-    if(Agent.LATEST_SNAPSHOT.equals(agent)){
+    if(Agent.LATEST_UPSTREAM_SNAPSHOT.equals(agent)){
       return snapshotResolver.resolve();
     }
     if(agent.hasUrl()){

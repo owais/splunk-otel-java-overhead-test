@@ -12,11 +12,18 @@ public class Agent {
   final static String OTEL_LATEST = "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent-all.jar";
 
   public final static Agent NONE = new Agent("none", "no agent at all");
-  public final static Agent LATEST_RELEASE = new Agent("latest", "latest mainstream release", OTEL_LATEST);
-  public final static Agent LATEST_SNAPSHOT = new Agent("snapshot", "latest available snapshot version from main");
+  public final static Agent LATEST_UPSTREAM_RELEASE = new Agent("latest", "latest mainstream release", OTEL_LATEST);
+  public final static Agent LATEST_UPSTREAM_SNAPSHOT = new Agent("snapshot", "latest available snapshot version from main");
+
+  private final static String SPLUNK_AGENT_URL = "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.3.1/splunk-otel-javaagent-1.3.1-all.jar";
+
+  public final static Agent SPLUNK_OTEL = new Agent("profiler", "splunk-otel-java 1.3.1", SPLUNK_AGENT_URL);
   public final static Agent SPLUNK_PROFILER = new Agent("profiler", "splunk-otel-java 1.3.1",
-          "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.3.1/splunk-otel-javaagent-1.3.1-all.jar",
+          SPLUNK_AGENT_URL,
           List.of("-Dsplunk.profiler.enabled=true"));
+  public final static Agent SPLUNK_PROFILER_W_TLAB = new Agent("profiler", "splunk-otel-java 1.3.1",
+          SPLUNK_AGENT_URL,
+          List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true"));
 
   private final String name;
   private final String description;
