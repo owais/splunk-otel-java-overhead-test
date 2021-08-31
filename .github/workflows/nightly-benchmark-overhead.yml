@@ -15,13 +15,13 @@ jobs:
           path: gh-pages
       - name: copy results from gh-pages branch
         run: |
-          rsync -avv gh-pages/benchmark-overhead/results/ benchmark-overhead/new-results/ && rm -rf gh-pages
+          rsync -avv gh-pages/results/ new-results/ && rm -rf gh-pages
       - name: run tests
         run: ./gradlew test
-        working-directory: benchmark-overhead
+        working-directory: .
       - name: commit updated results
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: gh-pages
           commit_message: update test result data
-          file_pattern: benchmark-overhead/new-results
+          file_pattern: new-results
