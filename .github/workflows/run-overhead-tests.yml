@@ -15,16 +15,20 @@ jobs:
           path: gh-pages
       - name: copy results from gh-pages branch
         run: |
-          rsync -avv gh-pages/results/ results/ && rm -rf gh-pages
+          rsync -avv gh-pages/results/ results/
       - name: run tests
         run: ./gradlew test
         working-directory: .
       - name: inspect the results dir
         run: |
-          ls -l results
+          ls -lR results
+      - name: copy results back to gh-pages branch
+        run: |
+          rsync -avv results/ gh-pages/results/ && rm -rf results
       - name: commit updated results
         uses: EndBug/add-and-commit@v7
         with:
           add: 'results'
-          branch: gh-pages
+          cwd: './gh-pages'
+          branch: 'gh-pages'
           message: 'update test result data'
