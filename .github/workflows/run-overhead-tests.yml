@@ -1,4 +1,4 @@
-name: benchmark-overhead tests
+name: run overhead tests
 on:
   workflow_dispatch:
 
