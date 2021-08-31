@@ -22,7 +22,7 @@ public class MainResultsPersister implements ResultsPersister {
 
   @Override
   public void write(List<AppPerfResults> results) {
-    Path outputDir = Paths.get("new-results", config.getName());
+    Path outputDir = Paths.get("results", config.getName());
     ensureCreated(outputDir);
     new ConsoleResultsPersister().write(results);
     new FileSummaryPersister(outputDir.resolve("summary.txt")).write(results);
