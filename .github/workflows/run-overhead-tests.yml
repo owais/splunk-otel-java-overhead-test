@@ -19,9 +19,13 @@ jobs:
       - name: run tests
         run: ./gradlew test
         working-directory: .
+      - name: inspect the results dir
+        run: |
+          ls -l results
       - name: commit updated results
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: EndBug/add-and-commit@v7
         with:
+          add: results/
           branch: gh-pages
-          commit_message: update test result data
+          message: update test result data
           file_pattern: results
