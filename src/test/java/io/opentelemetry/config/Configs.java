@@ -17,8 +17,8 @@ public enum Configs {
   RELEASE(TestConfig.builder()
       .name("release")
       .description("compares the latest stable release to no agent")
-      .withAgents(Agent.NONE, Agent.LATEST_RELEASE)
-      .warmupSeconds(30)
+      .withAgents(Agent.LATEST_RELEASE, Agent.SPLUNK_PROFILER)
+//      .warmupSeconds(30)
       .build()
   ),
   ;
