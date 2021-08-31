@@ -84,5 +84,12 @@ be a result of 10 test passes.
 * {100, 100, 5000}
 
 The test framework will persist 10 test passes in a single csv file.
-This csv file can then be used to create a bar chart, 1 bar for 
-each agent configuration.
+The test passes should be averaged and the results presented as 
+absolute units (percentages should be avoided).
+
+This csv file will be used to create a bar chart, 1 bar for 
+each agent configuration, 1 chart per permutation line above.
+
+The data should be managed with a shared google sheet.
+We will look at the results to rule out anomalies and 
+summarize the results with another document (shared google doc).
