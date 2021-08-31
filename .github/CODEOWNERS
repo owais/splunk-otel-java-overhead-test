@@ -1,4 +1,4 @@
 # Learn about CODEOWNERS file format:
 #  https://help.github.com/en/articles/about-code-owners
 
-* @iNikem @jkwatson @laurit @mateuszrzeszutek @breedx-splk
+* @signalfx/gdi-java-maintainers @signalfx/gdi-java-approvers @breedx-splk
