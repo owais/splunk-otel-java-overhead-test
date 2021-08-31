@@ -25,7 +25,6 @@ jobs:
       - name: commit updated results
         uses: EndBug/add-and-commit@v7
         with:
-          add: results/
+          add: 'results'
           branch: gh-pages
-          message: update test result data
-          file_pattern: results
+          message: 'update test result data'
