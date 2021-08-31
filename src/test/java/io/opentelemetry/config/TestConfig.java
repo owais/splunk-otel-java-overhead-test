@@ -18,7 +18,7 @@ public class TestConfig {
 
   private final static int DEFAULT_MAX_REQUEST_RATE = 0;  // none
   private final static int DEFAULT_CONCURRENT_CONNECTIONS = 5;
-  private final static int DEFAULT_TOTAL_ITERATIONS = 5000;
+  private final static int DEFAULT_TOTAL_ITERATIONS = 500;
 
   private final String name;
   private final String description;
