@@ -58,6 +58,8 @@ We will perform 10 independent test passes for each set of {s,c} variables:
 * c = {5, 10, 50}
 * p = {500, 5000}
 
+In each test, we will measure the metrics listed [in the table here](https://github.com/breedx-splk/opentelemetry-java-instrumentation/tree/main/benchmark-overhead#what-do-we-measure).
+
 # Results
 
 In this permutation space, we will then have 3 * 3 * 2 = 18 results. Each result will
