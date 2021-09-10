@@ -51,9 +51,10 @@ By default, nova hosts use password login for ssh, which isn't great.
 Let's get our public key set up for ssh access:
 
 ```
-$ ansible-playbook -i hosts.yml --ask-pass bootstrap-ssh.yml
+$ ./bootstrap.sh
 ```
 
+Enter the interactive password for the `splunker` user when prompted.
 You only have to do this once after creating the hosts in nova.
 If they get destroyed, you'll run this again.
 
