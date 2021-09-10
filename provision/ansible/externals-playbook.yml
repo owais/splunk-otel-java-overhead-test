@@ -3,10 +3,34 @@
   become: true
 #  vars_files:
 #    - vars/default.yml
-#  connection: paramiko_ssh
   tasks:
+    - name: install iptables
+      apt:
+        name:
+          - iptables
+    - name: lock down the docker port so only the testbox can talk to it
+      ansible.builtin.iptables:
+        chain: INPUT
+        action: insert
+        protocol: tcp
+        in_interface: '!lo'
+        destination_port: 2375
+        source: "!{{testbox_host}}"
+        jump: DROP
     - name: Install docker on ubuntu
       import_tasks: install-docker-playbook.yml
+    - name: Let docker listen on external port
+      ansible.builtin.lineinfile:
+        path: /lib/systemd/system/docker.service
+        search_string: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock'
+        line: 'ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock'
+    - name: tell systemd about the config change on disk
+      ansible.builtin.command:
+        cmd: systemctl daemon-reload
+    - name: restart docker daemon after config change
+      ansible.builtin.service:
+        name: docker
+        state: restarted
 
     - name: copy sql init script
       ansible.builtin.copy:
@@ -52,6 +76,17 @@
       ansible.builtin.command:
         cmd: docker build -t collector -f Dockerfile-collector .
 
+    - name: lock down app ports just for testbox
+      ansible.builtin.iptables:
+        chain: DOCKER-USER
+        action: insert
+        protocol: tcp
+        in_interface: '!lo'
+        destination_ports:
+          - 4317
+          - 5432
+        source: "!{{testbox_host}}"
+        jump: DROP
     - name: run the collector
       ansible.builtin.command:
-        cmd: docker run -d --rm collector
+        cmd: docker run -d --rm -p 13133:13133 -p 4317:4317 collector

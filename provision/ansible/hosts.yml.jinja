@@ -1,10 +1,13 @@
 all:
+  vars:
+    testbox_host: {{testbox_host}}
+    externals_host: {{externals_host}}
   children:
     externals:
       hosts:
-        i-0b4b4402fed31aefe.ec2.splunkit.io:
+        {{externals_host}}:
           ansible_user: splunker
     testbox:
       hosts:
-        i-0a2af1644e348ded1.ec2.splunkit.io:
+        {{testbox_host}}:
           ansible_user: splunker

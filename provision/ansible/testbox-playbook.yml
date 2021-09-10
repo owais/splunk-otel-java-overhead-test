@@ -1,0 +1,6 @@
+---
+- hosts: testbox
+  become: true
+  tasks:
+    - name: Install docker on ubuntu
+      import_tasks: install-docker-playbook.yml
