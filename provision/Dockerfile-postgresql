@@ -1,0 +1,8 @@
+FROM postgres:9.6.22
+
+ENV POSTGRES_DB=petclinic
+ENV POSTGRES_USER=petclinic
+ENV POSTGRES_PASSWORD=petclinic
+
+COPY initDB.sql /docker-entrypoint-initdb.d/initDB.sql
+COPY populateDB.sql /docker-entrypoint-initdb.d/populateDB.sql
