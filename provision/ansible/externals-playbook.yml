@@ -51,3 +51,7 @@
     - name: Build collector image
       ansible.builtin.command:
         cmd: docker build -t collector -f Dockerfile-collector .
+
+    - name: run the collector
+      ansible.builtin.command:
+        cmd: docker run -d --rm collector
