@@ -36,12 +36,11 @@ Again, the purpose is to quantify overhead in the normal operational range, not 
 
 # Process
 
-We will run each agent in turn on the same CI invocation to help ensure that we are running on the same hardware.
-We are concerned with comparison of different agents (eg. how agent configuration A compares to config B),
+We are primarily concerned with comparison of different agents (eg. how agent configuration A compares to config B),
 not consistency between runs. 
 
-The instrumented service (petclinic), the otel collector, and the postgres database all run
-within docker (composed with testcontainers). The postgres database is restarted between each run to avoid optimizations 
+We will run each agent in turn on the same EC2 instance. The postgres database and collector
+will be run on a separate instance (via docker). The postgres database is restarted between each run to avoid optimizations
 and biased caching. A 60s JVM warm up phase will be used to exclude most jit compilations.
 
 For the purposes of this experiment, we _assume_ that [noisy neighbor](https://searchcloudcomputing.techtarget.com/definition/noisy-neighbor-cloud-computing-performance)

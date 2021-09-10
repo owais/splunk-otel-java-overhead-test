@@ -1,0 +1,9 @@
+---
+- hosts: externals
+  become: true
+#  vars_files:
+#    - vars/default.yml
+#  connection: paramiko_ssh
+  tasks:
+    - name: Install docker on ubuntu
+      import_tasks: install-docker-playbook.yml

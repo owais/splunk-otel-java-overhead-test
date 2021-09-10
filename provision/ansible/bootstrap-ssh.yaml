@@ -1,0 +1,20 @@
+# Sets up an ssh keypair so we don't use a password. Yikes.
+---
+- hosts: all
+  become: true
+  connection: paramiko_ssh
+  tasks:
+    - name: create .ssh dir
+      ansible.builtin.file:
+        path: /home/splunker/.ssh
+        state: directory
+        owner: splunker
+        group: splunker
+        mode: '0700'
+    - name: copy pubkey to the ssh dir
+      ansible.builtin.copy:
+        src: ~/.ssh/id_rsa.pub
+        dest: /home/splunker/.ssh/authorized_keys
+        owner: splunker
+        group: splunker
+        mode: '0600'
