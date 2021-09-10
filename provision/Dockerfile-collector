@@ -1,0 +1,6 @@
+FROM otel/opentelemetry-collector-contrib:latest
+
+COPY collector.yaml /etc/otel/config.yaml
+
+EXPOSE 4317
+EXPOSE 13133

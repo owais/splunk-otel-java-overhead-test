@@ -5,38 +5,49 @@
 #    - vars/default.yml
 #  connection: paramiko_ssh
   tasks:
-#    - name: Install docker on ubuntu
-#      import_tasks: install-docker-playbook.yml
-#
-#    - name: copy sql init script
-#      ansible.builtin.copy:
-#        src: ../../src/test/resources/initDB.sql
-#        dest: /home/splunker/
-#        owner: splunker
-#        group: splunker
-#        mode: '0644'
-#    - name: copy sql init script
-#      ansible.builtin.copy:
-#        src: ../../src/test/resources/populateDB.sql
-#        dest: /home/splunker/
-#        owner: splunker
-#        group: splunker
-#        mode: '0644'
-#    - name: copy collector yaml
-#      ansible.builtin.copy:
-#        src: ../../src/test/resources/collector.yaml
-#        dest: /home/splunker/
-#        owner: splunker
-#        group: splunker
-#        mode: '0644'
-#    - name: copy postgres dockerfile
-#      ansible.builtin.copy:
-#        src: ../Dockerfile-postgresql
-#        dest: /home/splunker/
-#        owner: splunker
-#        group: splunker
-#        mode: '0644'
+    - name: Install docker on ubuntu
+      import_tasks: install-docker-playbook.yml
+
+    - name: copy sql init script
+      ansible.builtin.copy:
+        src: ../../src/test/resources/initDB.sql
+        dest: /home/splunker/
+        owner: splunker
+        group: splunker
+        mode: '0644'
+    - name: copy sql init script
+      ansible.builtin.copy:
+        src: ../../src/test/resources/populateDB.sql
+        dest: /home/splunker/
+        owner: splunker
+        group: splunker
+        mode: '0644'
+    - name: copy collector yaml
+      ansible.builtin.copy:
+        src: ../../src/test/resources/collector.yaml
+        dest: /home/splunker/
+        owner: splunker
+        group: splunker
+        mode: '0644'
+    - name: copy postgres dockerfile
+      ansible.builtin.copy:
+        src: ../Dockerfile-postgresql
+        dest: /home/splunker/
+        owner: splunker
+        group: splunker
+        mode: '0644'
+    - name: copy collector dockerfile
+      ansible.builtin.copy:
+        src: ../Dockerfile-collector
+        dest: /home/splunker/
+        owner: splunker
+        group: splunker
+        mode: '0644'
 
     - name: Build postgres image
       ansible.builtin.command:
-        cmd: docker build -f Dockerfile-postgresql .
+        cmd: docker build -t postgres -f Dockerfile-postgresql .
+
+    - name: Build collector image
+      ansible.builtin.command:
+        cmd: docker build -t collector -f Dockerfile-collector .
