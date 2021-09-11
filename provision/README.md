@@ -61,8 +61,7 @@ If they get destroyed, you'll run this again.
 # run
 
 
-
-
 ```
 $ ansible-playbook -i hosts.yml externals-playbook.yml
+$ ansible-playbook -i ansible/hosts.yml ansible/testbox-playbook.yml
 ```

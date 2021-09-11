@@ -2,5 +2,42 @@
 - hosts: testbox
   become: true
   tasks:
+    - name: install java 11 jdk
+      apt:
+        name:
+          - openjdk-11-jdk-headless
     - name: Install docker on ubuntu
       import_tasks: install-docker-playbook.yml
+#    - name: copy project directory
+#      ansible.builtin.command:
+#        cmd: 'rsync -avv --progress ../k6 ../src ../gradle ../build.gradle.kts ../gradlew ../settings.gradle.kts splunker@{{testbox_host}}:/home/splunker/'
+    - name: copy k6 directory
+      ansible.posix.synchronize:
+        src: ../../k6
+        dest: /home/splunker/
+    - name: copy project src directory
+      ansible.posix.synchronize:
+        src: ../../src
+        dest: /home/splunker/
+    - name: copy gradle directory
+      ansible.posix.synchronize:
+        src: ../../gradle
+        dest: /home/splunker/
+    - name: copy gradle settings
+      ansible.posix.synchronize:
+        src: ../../settings.gradle.kts
+        dest: /home/splunker/
+    - name: copy gradle build script
+      ansible.posix.synchronize:
+        src: ../../build.gradle.kts
+        dest: /home/splunker/
+    - name: copy gradle wrapper
+      ansible.posix.synchronize:
+        src: ../../gradlew
+        dest: /home/splunker/
+    - name: chown copied files
+      ansible.builtin.command:
+        cmd: 'chown -R splunker:splunker k6 src gradle build.gradle.kts gradlew settings.gradle.kts'
+    - name: run the build
+      ansible.builtin.command:
+        cmd: ./gradlew build
