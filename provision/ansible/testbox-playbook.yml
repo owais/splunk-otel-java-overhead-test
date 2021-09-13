@@ -43,4 +43,4 @@
       become: yes
       become_user: splunker
       ansible.builtin.command:
-        cmd: ./gradlew compileJava
+        cmd: ./gradlew compileTestJava
