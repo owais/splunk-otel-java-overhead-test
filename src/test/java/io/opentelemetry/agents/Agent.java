@@ -21,9 +21,18 @@ public class Agent {
   public final static Agent SPLUNK_PROFILER = new Agent("profiler", "splunk-otel-java 1.3.1",
           SPLUNK_AGENT_URL,
           List.of("-Dsplunk.profiler.enabled=true"));
-  public final static Agent SPLUNK_PROFILER_W_TLAB = new Agent("profiler-tlab", "splunk-otel-java 1.3.1",
+
+  public final static Agent SPLUNK_PROFILER_W_TLAB_1SS = new Agent("profiler-tlab", "splunk-otel-java 1.3.1",
           SPLUNK_AGENT_URL,
           List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true"));
+
+  public final static Agent SPLUNK_PROFILER_W_TLAB_10SS = new Agent("profiler-tlab", "splunk-otel-java 1.3.1",
+          SPLUNK_AGENT_URL,
+          List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true", "-Dsplunk.profiler.period.threaddump=100"));
+
+  public final static Agent SPLUNK_PROFILER_W_TLAB_100SS = new Agent("profiler-tlab", "splunk-otel-java 1.3.1",
+          SPLUNK_AGENT_URL,
+          List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true", "-Dsplunk.profiler.period.threaddump=10"));
 
   private final String name;
   private final String description;

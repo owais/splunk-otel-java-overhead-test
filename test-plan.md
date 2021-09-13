@@ -44,7 +44,8 @@ will be run on a separate instance (via docker). The postgres database is restar
 and biased caching. A 60s JVM warm up phase will be used to exclude most jit compilations.
 
 For the purposes of this experiment, we _assume_ that [noisy neighbor](https://searchcloudcomputing.techtarget.com/definition/noisy-neighbor-cloud-computing-performance)
-interference is minimal and do not take it into consideration.
+interference is minimal and do not take it into consideration. Having the collector and postgres 
+externalized helps here.
 
 Given:
 * s = sampling rate (in samples per second)
