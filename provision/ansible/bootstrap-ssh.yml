@@ -9,12 +9,12 @@
         path: /home/splunker/.ssh
         state: directory
         owner: splunker
-        group: splunker
+        group: users
         mode: '0700'
     - name: copy pubkey to the ssh dir
       ansible.builtin.copy:
         src: ~/.ssh/id_rsa.pub
         dest: /home/splunker/.ssh/authorized_keys
         owner: splunker
-        group: splunker
+        group: users
         mode: '0600'

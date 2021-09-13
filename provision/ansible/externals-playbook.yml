@@ -37,35 +37,35 @@
         src: ../../src/test/resources/initDB.sql
         dest: /home/splunker/
         owner: splunker
-        group: splunker
+        group: users
         mode: '0644'
     - name: copy sql init script
       ansible.builtin.copy:
         src: ../../src/test/resources/populateDB.sql
         dest: /home/splunker/
         owner: splunker
-        group: splunker
+        group: users
         mode: '0644'
     - name: copy collector yaml
       ansible.builtin.copy:
         src: ../../src/test/resources/collector.yaml
         dest: /home/splunker/
         owner: splunker
-        group: splunker
+        group: users
         mode: '0644'
     - name: copy postgres dockerfile
       ansible.builtin.copy:
         src: ../Dockerfile-postgresql
         dest: /home/splunker/
         owner: splunker
-        group: splunker
+        group: users
         mode: '0644'
     - name: copy collector dockerfile
       ansible.builtin.copy:
         src: ../Dockerfile-collector
         dest: /home/splunker/
         owner: splunker
-        group: splunker
+        group: users
         mode: '0644'
 
     - name: Build postgres image

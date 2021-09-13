@@ -5,6 +5,7 @@
     - name: install java 11 jdk
       apt:
         name:
+          - screen
           - openjdk-11-jdk-headless
     - name: Install docker on ubuntu
       import_tasks: install-docker-playbook.yml
@@ -37,7 +38,9 @@
         dest: /home/splunker/
     - name: chown copied files
       ansible.builtin.command:
-        cmd: 'chown -R splunker:splunker k6 src gradle build.gradle.kts gradlew settings.gradle.kts'
+        cmd: 'chown -R splunker:users k6 src gradle build.gradle.kts gradlew settings.gradle.kts'
     - name: run the build
+      become: yes
+      become_user: splunker
       ansible.builtin.command:
-        cmd: ./gradlew build
+        cmd: ./gradlew compileJava
