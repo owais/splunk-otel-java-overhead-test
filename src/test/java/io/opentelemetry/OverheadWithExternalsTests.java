@@ -7,17 +7,13 @@ package io.opentelemetry;
 import io.opentelemetry.agents.Agent;
 import io.opentelemetry.config.Configs;
 import io.opentelemetry.config.TestConfig;
-import io.opentelemetry.containers.CollectorContainer;
 import io.opentelemetry.containers.K6Container;
 import io.opentelemetry.containers.PetClinicRestContainer;
-import io.opentelemetry.containers.PostgresContainer;
+import io.opentelemetry.containers.RemotePostgresContainer;
 import io.opentelemetry.results.AppPerfResults;
 import io.opentelemetry.results.MainResultsPersister;
 import io.opentelemetry.results.ResultsCollector;
 import io.opentelemetry.util.NamingConventions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import org.testcontainers.containers.GenericContainer;
@@ -33,27 +29,18 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.DynamicTest.dynamicTest;
 
-public class OverheadTests {
+// Overhead tests but with remote collector and postgres components.
+public class OverheadWithExternalsTests {
 
   private static final Network NETWORK = Network.newNetwork();
-  private static GenericContainer<?> collector;
+  public static final String ENV_EXTERNALS_HOST = "EXTERNALS_HOST";
   private final NamingConventions namingConventions = new NamingConventions();
+  private RemotePostgresContainer postgres;
 
-  @BeforeAll
-  static void setUp() {
-    collector = CollectorContainer.build(NETWORK);
-    collector.start();
-  }
-
-  @AfterAll
-  static void tearDown() {
-    collector.close();
-  }
-
-  @Disabled
   @TestFactory
   Stream<DynamicTest> runAllTestConfigurations() {
     return Configs.all().map(config ->
@@ -74,10 +61,19 @@ public class OverheadTests {
   }
 
   void runAppOnce(TestConfig config, Agent agent) throws Exception {
-    GenericContainer<?> postgres = new PostgresContainer(NETWORK).build();
+    postgres = RemotePostgresContainer.build(getPostgresHost());
     postgres.start();
+    try {
+      runApp(config, agent);
+    } catch (Exception e) {
+      postgres.stop();
+    }
+  }
 
-    GenericContainer<?> petclinic = new PetClinicRestContainer(NETWORK, collector, agent, namingConventions).build();
+  private void runApp(TestConfig config, Agent agent) throws Exception {
+    verifyExternals();
+
+    GenericContainer<?> petclinic = new PetClinicRestContainer(NETWORK, agent, namingConventions, getPostgresHost(), getCollectorHost()).build();
     long start = System.currentTimeMillis();
     petclinic.start();
     writeStartupTimeFile(agent, start);
@@ -97,7 +93,18 @@ public class OverheadTests {
     while (petclinic.isRunning()) {
       TimeUnit.MILLISECONDS.sleep(500);
     }
-    postgres.stop();
+  }
+
+  private void verifyExternals() {
+    assertNotNull(getPostgresHost(), "You must define EXTERNALS_HOST env var");
+  }
+
+  private String getPostgresHost() {
+    return System.getenv(ENV_EXTERNALS_HOST);
+  }
+
+  private String getCollectorHost() {
+    return System.getenv(ENV_EXTERNALS_HOST);
   }
 
   private void startRecording(Agent agent, GenericContainer<?> petclinic) throws Exception {

@@ -34,12 +34,25 @@ public class PetClinicRestContainer {
   private final Startable collector;
   private final Agent agent;
   private final NamingConventions namingConventions;
+  private final String postgresHost;
+  private final String collectorHost;
+
+  public PetClinicRestContainer(Network network, Agent agent, NamingConventions namingConventions, String postgresHost, String collectorHost) {
+    this(network, null, agent, namingConventions, postgresHost, collectorHost);
+  }
 
   public PetClinicRestContainer(Network network, Startable collector, Agent agent, NamingConventions namingConventions) {
+    this(network, collector, agent, namingConventions, "postgres", "collector");
+  }
+
+  public PetClinicRestContainer(Network network, Startable collector, Agent agent, NamingConventions namingConventions,
+                                String postgresHost, String collectorHost) {
     this.network = network;
     this.collector = collector;
     this.agent = agent;
     this.namingConventions = namingConventions;
+    this.postgresHost = postgresHost;
+    this.collectorHost = collectorHost;
   }
 
   public GenericContainer<?> build() throws Exception {
@@ -47,23 +60,27 @@ public class PetClinicRestContainer {
     Optional<Path> agentJar = agentResolver.resolve(this.agent);
 
     GenericContainer<?> container = new GenericContainer<>(
-        DockerImageName.parse("ghcr.io/open-telemetry/opentelemetry-java-instrumentation/petclinic-rest-base:latest"))
-        .withNetwork(network)
-        .withNetworkAliases("petclinic")
-        .withLogConsumer(new Slf4jLogConsumer(logger))
-        .withExposedPorts(PETCLINIC_PORT)
-        .withFileSystemBind(namingConventions.localResults(), namingConventions.containerResults())
-        .waitingFor(Wait.forHttp("/petclinic/actuator/health").forPort(PETCLINIC_PORT))
-        .withEnv("spring_profiles_active", "postgresql,spring-data-jpa")
-        .withEnv("spring_datasource_url", "jdbc:postgresql://postgres:5432/" + PostgresContainer.DATABASE_NAME)
-        .withEnv("spring_datasource_username", PostgresContainer.USERNAME)
-        .withEnv("spring_datasource_password", PostgresContainer.PASSWORD)
-        .withEnv("spring_jpa_hibernate_ddl-auto", "none")
-        .dependsOn(collector)
-        .withCommand(buildCommandline(agentJar));
+            DockerImageName.parse("ghcr.io/open-telemetry/opentelemetry-java-instrumentation/petclinic-rest-base:latest"))
+            .withNetwork(network)
+            .withNetworkAliases("petclinic")
+            .withLogConsumer(new Slf4jLogConsumer(logger))
+            .withExposedPorts(PETCLINIC_PORT)
+            .withFileSystemBind(namingConventions.localResults(), namingConventions.containerResults())
+            .waitingFor(Wait.forHttp("/petclinic/actuator/health").forPort(PETCLINIC_PORT))
+            .withEnv("spring_profiles_active", "postgresql,spring-data-jpa")
+            .withEnv("spring_datasource_url", "jdbc:postgresql://" + postgresHost + ":5432/" + PostgresContainer.DATABASE_NAME)
+            .withEnv("spring_datasource_username", PostgresContainer.USERNAME)
+            .withEnv("spring_datasource_password", PostgresContainer.PASSWORD)
+            .withEnv("spring_jpa_hibernate_ddl-auto", "none")
+            .withCommand(buildCommandline(agentJar));
 
+    if(collector != null){
+      container = container.dependsOn(collector);
+    }
+
+    GenericContainer<?> gc = container;
     agentJar.ifPresent(
-        agentPath -> container.withCopyFileToContainer(
+        agentPath -> gc.withCopyFileToContainer(
             MountableFile.forHostPath(agentPath),
             "/app/" + agentPath.getFileName().toString())
     );
@@ -72,12 +89,16 @@ public class PetClinicRestContainer {
 
   @NotNull
   private String[] buildCommandline(Optional<Path> agentJar) {
+    String collectorUrl = collector == null ?
+            "http://" + collectorHost + ":4317"
+            :
+            "http://collector:4317";
     List<String> result = new ArrayList<>(Arrays.asList(
         "java",
         "-Dotel.traces.exporter=otlp",
         "-Dotel.imr.export.interval=5000",
         "-Dotel.exporter.otlp.insecure=true",
-        "-Dotel.exporter.otlp.endpoint=http://collector:4317",
+        "-Dotel.exporter.otlp.endpoint=" + collectorUrl,
         "-Dotel.resource.attributes=service.name=petclinic-otel-overhead"
     ));
     result.addAll(this.agent.getAdditionalJvmArgs());
