@@ -60,8 +60,34 @@ If they get destroyed, you'll run this again.
 
 # run
 
+This is how you run the provisioning steps. The first one sets up the
+externals host (where postgres and collector run) and the other
+sets up the testbox itself.
 
 ```
-$ ansible-playbook -i hosts.yml externals-playbook.yml
+$ ansible-playbook -i ansible/hosts.yml ansible/externals-playbook.yml
 $ ansible-playbook -i ansible/hosts.yml ansible/testbox-playbook.yml
+```
+
+# run tests
+
+The tests run on the testbox instance. It is recommended to run within `screen`
+because the tests take a long time.
+
+```
+$ source env.sh
+$ ssh splunker@${TESTBOX_HOST}
+$ screen 
+$ ./gradlew --no-daemon cleanTest test
+
+# misc
+
+make strings that can be fed to awk....
+```
+for f in `seq 0 14` ; do for a in `seq 0 5` ; do echo -n "\$$(($f+2+15*$a)) \",\" "; done; done
+```
+
+then 
+```
+awk -F, '{ print $1 "," <bigstring> }' results.csv
 ```
