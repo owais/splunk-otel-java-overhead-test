@@ -40,7 +40,9 @@ We are primarily concerned with comparison of different agents (eg. how agent co
 not consistency between runs. 
 
 We will run each agent in turn on the same EC2 instance. The postgres database and collector
-will be run on a separate instance (via docker). The postgres database is restarted between each run to avoid optimizations
+will be run on a separate instance (via docker). Both EC2 instances will be of type `m5.large` (2 vCPUs, 8GB ram).
+
+The postgres database is restarted between each run to avoid optimizations
 and biased caching. A 60s JVM warm up phase will be used to exclude most jit compilations.
 
 For the purposes of this experiment, we _assume_ that [noisy neighbor](https://searchcloudcomputing.techtarget.com/definition/noisy-neighbor-cloud-computing-performance)
