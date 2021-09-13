@@ -65,7 +65,8 @@ public class OverheadWithExternalsTests {
     postgres.start();
     try {
       runApp(config, agent);
-    } catch (Exception e) {
+    }
+    finally {
       postgres.stop();
     }
   }
