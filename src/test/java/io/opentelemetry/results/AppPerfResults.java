@@ -25,6 +25,7 @@ public class AppPerfResults {
   final long averageNetworkWrite;
   final float averageJvmUserCpu;
   final float maxJvmUserCpu;
+  final float averageMachineCpuTotal;
 
 
   private AppPerfResults(Builder builder) {
@@ -44,6 +45,7 @@ public class AppPerfResults {
     this.averageNetworkWrite = builder.averageNetworkWrite;
     this.averageJvmUserCpu = builder.averageJvmUserCpu;
     this.maxJvmUserCpu = builder.maxJvmUserCpu;
+    this.averageMachineCpuTotal = builder.averageMachineCpuTotal;
   }
 
   double getTotalAllocatedMB() {
@@ -74,6 +76,7 @@ public class AppPerfResults {
     public long averageNetworkWrite;
     public float averageJvmUserCpu;
     public float maxJvmUserCpu;
+    public float averageMachineCpuTotal;
 
     AppPerfResults build() {
       return new AppPerfResults(this);
@@ -156,6 +159,11 @@ public class AppPerfResults {
 
     Builder maxJvmUserCpu(float maxJvmUserCpu){
       this.maxJvmUserCpu = maxJvmUserCpu;
+      return this;
+    }
+
+    Builder averageMachineCpuTotal(float averageMachineCpuTotal){
+      this.averageMachineCpuTotal = averageMachineCpuTotal;
       return this;
     }
   }

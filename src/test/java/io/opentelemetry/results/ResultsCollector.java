@@ -80,7 +80,8 @@ public class ResultsCollector {
         .averageNetworkRead(computeAverageNetworkRead(jfrFile))
         .averageNetworkWrite(computeAverageNetworkWrite(jfrFile))
         .averageJvmUserCpu(computeAverageJvmUserCpu(jfrFile))
-        .maxJvmUserCpu(computeMaxJvmUserCpu(jfrFile));
+        .maxJvmUserCpu(computeMaxJvmUserCpu(jfrFile))
+        .averageMachineCpuTotal(computeAverageMachineCpuTotal(jfrFile));
   }
 
   private float computeAverageJvmUserCpu(Path jfrFile) throws IOException {
@@ -89,6 +90,10 @@ public class ResultsCollector {
 
   private float computeMaxJvmUserCpu(Path jfrFile) throws IOException {
     return JFRUtils.findMaxFloat(jfrFile, "jdk.CPULoad", "jvmUser");
+  }
+
+  private float computeAverageMachineCpuTotal(Path jfrFile) throws IOException {
+    return JFRUtils.computeAverageFloat(jfrFile, "jdk.CPULoad", "machineTotal");
   }
 
   private long computeAverageNetworkRead(Path jfrFile) throws IOException {

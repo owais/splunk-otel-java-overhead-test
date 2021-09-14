@@ -26,6 +26,8 @@ public enum Configs {
       .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER, Agent.SPLUNK_PROFILER_W_TLAB_1SS, Agent.SPLUNK_PROFILER_W_TLAB_10SS, Agent.SPLUNK_PROFILER_W_TLAB_100SS)
       .totalIterations(500)
       .warmupSeconds(60)
+//      .maxRequestRate(5)
+//      .concurrentConnections(2)
       .build()),
 
 //  RELEASEx1(TestConfig.builder()
