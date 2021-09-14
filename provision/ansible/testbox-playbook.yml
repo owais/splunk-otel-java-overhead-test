@@ -45,6 +45,13 @@
       ansible.posix.synchronize:
         src: ../../gradlew
         dest: /home/splunker/
+    - name: copy run10 script
+      ansible.builtin.template:
+        src: run10.sh.jinja
+        dest: /home/splunker/run10.sh
+        owner: splunker
+        group: users
+        mode: 0755
     - name: chown copied files
       ansible.builtin.command:
         cmd: 'chown -R splunker:users k6 src gradle build.gradle.kts gradlew settings.gradle.kts'

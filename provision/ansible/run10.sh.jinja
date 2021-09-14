@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# You should run this within screen
+
+for i in `seq 1 10` ; do
+  EXTERNALS_HOST={{externals_host}} ./gradlew --no-daemon cleanTest test
+done
