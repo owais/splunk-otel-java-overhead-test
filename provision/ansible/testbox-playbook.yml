@@ -2,6 +2,15 @@
 - hosts: testbox
   become: true
   tasks:
+    - name: shut down splunk
+      ansible.builtin.command:
+        cmd: sudo /etc/init.d/splunk stop
+    - name: shut down cloudwatch
+      ansible.builtin.command:
+        cmd: sudo service amazon-cloudwatch-agent stop
+    - name: shut down amazon ssm service
+      ansible.builtin.command:
+        cmd: sudo service snap.amazon-ssm-agent.amazon-ssm-agent stop
     - name: install java 11 jdk
       apt:
         name:
