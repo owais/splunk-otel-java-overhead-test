@@ -84,7 +84,7 @@ $ EXTERNALS_HOST=<externals_host> ./gradlew --no-daemon cleanTest test
 
 make strings that can be fed to awk....
 ```
-for f in `seq 0 14` ; do for a in `seq 0 5` ; do echo -n "\$$(($f+2+15*$a)) \",\" "; done; done
+for f in `seq 0 15` ; do for a in `seq 0 5` ; do echo -n "\$$(($f+2+15*$a)) \",\" "; done; done
 ```
 
 then 
