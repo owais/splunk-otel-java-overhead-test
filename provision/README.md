@@ -78,7 +78,7 @@ because the tests take a long time.
 $ source env.sh
 $ ssh splunker@${TESTBOX_HOST}
 $ screen 
-$ ./gradlew --no-daemon cleanTest test
+$ EXTERNALS_HOST=<externals_host> ./gradlew --no-daemon cleanTest test
 
 # misc
 
