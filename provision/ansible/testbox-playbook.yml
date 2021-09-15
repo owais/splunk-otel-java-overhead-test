@@ -6,12 +6,19 @@
       ansible.builtin.command:
         cmd: sudo /etc/init.d/splunk stop
     - name: shut down cloudwatch
+      ignore_errors: yes
       ansible.builtin.command:
         cmd: sudo service amazon-cloudwatch-agent stop
     - name: shut down amazon ssm service
       ansible.builtin.command:
         cmd: sudo service snap.amazon-ssm-agent.amazon-ssm-agent stop
-    - name: install java 11 jdk
+    - name: remove unwanted packages
+      apt:
+        state: absent
+        name:
+          - unattended-upgrades
+          - snapd
+    - name: install java 11 jdk and screen
       apt:
         name:
           - screen
