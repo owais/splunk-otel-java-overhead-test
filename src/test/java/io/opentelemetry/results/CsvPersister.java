@@ -45,6 +45,7 @@ class CsvPersister implements ResultsPersister {
       sb.append(",").append(result.averageJvmUserCpu);
       sb.append(",").append(result.maxJvmUserCpu);
       sb.append(",").append(result.averageMachineCpuTotal);
+      sb.append(",").append(result.runDurationMs);
     });
     sb.append("\n");
     try {
@@ -90,6 +91,7 @@ class CsvPersister implements ResultsPersister {
       sb.append(",").append(agent).append(":averageCpuUser");
       sb.append(",").append(agent).append(":maxCpuUser");
       sb.append(",").append(agent).append(":averageMachineCpuTotal");
+      sb.append(",").append(agent).append(":runDurationMs");
     });
     sb.append("\n");
     return sb.toString();

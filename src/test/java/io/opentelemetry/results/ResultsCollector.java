@@ -15,13 +15,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultsCollector {
 
   private final NamingConvention namingConvention;
+  private final Map<String, Long> runDurations;
 
-  public ResultsCollector(NamingConvention namingConvention) {this.namingConvention = namingConvention; }
+  public ResultsCollector(NamingConvention namingConvention, Map<String, Long> runDurations) {
+    this.namingConvention = namingConvention;
+    this.runDurations = runDurations;
+  }
 
   public List<AppPerfResults> collect(TestConfig config) {
     return config.getAgents().stream()
@@ -33,6 +38,7 @@ public class ResultsCollector {
     try {
       AppPerfResults.Builder builder = AppPerfResults.builder()
           .agent(agent)
+          .runDurationMs(runDurations.get(agent.getName()))
           .config(config);
 
       builder = addStartupTime(builder, agent);

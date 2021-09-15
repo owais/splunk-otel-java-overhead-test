@@ -26,6 +26,7 @@ public class AppPerfResults {
   final float averageJvmUserCpu;
   final float maxJvmUserCpu;
   final float averageMachineCpuTotal;
+  final long runDurationMs;
 
 
   private AppPerfResults(Builder builder) {
@@ -46,6 +47,7 @@ public class AppPerfResults {
     this.averageJvmUserCpu = builder.averageJvmUserCpu;
     this.maxJvmUserCpu = builder.maxJvmUserCpu;
     this.averageMachineCpuTotal = builder.averageMachineCpuTotal;
+    this.runDurationMs = builder.runDurationMs;
   }
 
   double getTotalAllocatedMB() {
@@ -77,6 +79,7 @@ public class AppPerfResults {
     public float averageJvmUserCpu;
     public float maxJvmUserCpu;
     public float averageMachineCpuTotal;
+    public long runDurationMs;
 
     AppPerfResults build() {
       return new AppPerfResults(this);
@@ -164,6 +167,11 @@ public class AppPerfResults {
 
     Builder averageMachineCpuTotal(float averageMachineCpuTotal){
       this.averageMachineCpuTotal = averageMachineCpuTotal;
+      return this;
+    }
+
+    Builder runDurationMs(long runDurationMs){
+      this.runDurationMs = runDurationMs;
       return this;
     }
   }

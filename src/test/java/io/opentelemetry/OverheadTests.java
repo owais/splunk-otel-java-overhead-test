@@ -29,7 +29,9 @@ import org.testcontainers.utility.MountableFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -41,6 +43,7 @@ public class OverheadTests {
   private static final Network NETWORK = Network.newNetwork();
   private static GenericContainer<?> collector;
   private final NamingConventions namingConventions = new NamingConventions();
+  private final Map<String,Long> runDurations = new HashMap<>();
 
   @BeforeAll
   static void setUp() {
@@ -62,6 +65,7 @@ public class OverheadTests {
   }
 
   void runTestConfig(TestConfig config) {
+    runDurations.clear();
     config.getAgents().forEach(agent -> {
       try {
         runAppOnce(config, agent);
@@ -69,7 +73,7 @@ public class OverheadTests {
         fail("Unhandled exception in " + config.getName(), e);
       }
     });
-    List<AppPerfResults> results = new ResultsCollector(namingConventions.local).collect(config);
+    List<AppPerfResults> results = new ResultsCollector(namingConventions.local, runDurations).collect(config);
     new MainResultsPersister(config).write(results);
   }
 

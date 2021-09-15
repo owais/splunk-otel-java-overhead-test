@@ -7,6 +7,7 @@ package io.opentelemetry.results;
 import io.opentelemetry.config.TestConfig;
 
 import java.io.PrintStream;
+import java.time.Duration;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,10 @@ class PrintStreamPersister implements ResultsPersister {
     out.printf(" %d users, %d iterations\n", config.getConcurrentConnections(), config.getTotalIterations());
     out.println("----------------------------------------------------------");
 
+    display(sorted, "Run duration", res -> {
+      Duration duration = Duration.ofMinutes(res.runDurationMs);
+      return String.format("%d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
+    });
     display(sorted, "Agent", appPerfResults -> appPerfResults.agent.getName());
     display(sorted, "Avg. CPU (user)", res -> String.valueOf(res.averageJvmUserCpu));
     display(sorted, "Max. CPU (user)", res -> String.valueOf(res.maxJvmUserCpu));

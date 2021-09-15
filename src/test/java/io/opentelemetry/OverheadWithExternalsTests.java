@@ -25,7 +25,9 @@ import org.testcontainers.utility.MountableFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
@@ -39,6 +41,7 @@ public class OverheadWithExternalsTests {
   private static final Network NETWORK = Network.newNetwork();
   public static final String ENV_EXTERNALS_HOST = "EXTERNALS_HOST";
   private final NamingConventions namingConventions = new NamingConventions();
+  private final Map<String,Long> runDurations = new HashMap<>();
   private RemotePostgresContainer postgres;
 
   @TestFactory
@@ -49,6 +52,7 @@ public class OverheadWithExternalsTests {
   }
 
   void runTestConfig(TestConfig config) {
+    runDurations.clear();
     config.getAgents().forEach(agent -> {
       try {
         runAppOnce(config, agent);
@@ -56,7 +60,7 @@ public class OverheadWithExternalsTests {
         fail("Unhandled exception in " + config.getName(), e);
       }
     });
-    List<AppPerfResults> results = new ResultsCollector(namingConventions.local).collect(config);
+    List<AppPerfResults> results = new ResultsCollector(namingConventions.local, runDurations).collect(config);
     new MainResultsPersister(config).write(results);
   }
 
@@ -83,10 +87,14 @@ public class OverheadWithExternalsTests {
       doWarmupPhase(config);
     }
 
+    long testStart = System.currentTimeMillis();
     startRecording(agent, petclinic);
 
     GenericContainer<?> k6 = new K6Container(NETWORK, agent, config, namingConventions).build();
     k6.start();
+
+    long runDuration = System.currentTimeMillis() - testStart;
+    runDurations.put(agent.getName(), runDuration);
 
     // This is required to get a graceful exit of the VM before testcontainers kills it forcibly.
     // Without it, our jfr file will be empty.
