@@ -25,9 +25,6 @@
           - openjdk-11-jdk-headless
     - name: Install docker on ubuntu
       import_tasks: install-docker-playbook.yml
-#    - name: copy project directory
-#      ansible.builtin.command:
-#        cmd: 'rsync -avv --progress ../k6 ../src ../gradle ../build.gradle.kts ../gradlew ../settings.gradle.kts splunker@{{testbox_host}}:/home/splunker/'
     - name: copy k6 directory
       ansible.posix.synchronize:
         src: ../../k6
