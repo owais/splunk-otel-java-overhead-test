@@ -95,7 +95,7 @@ public class PetClinicRestContainer {
             "http://collector:4317";
     List<String> result = new ArrayList<>(Arrays.asList(
         "java",
-        "-Xmx:2g",
+        "-Xmx2g",
         "-XX:+AlwaysPreTouch",
         "-Dotel.traces.exporter=otlp",
         "-Dotel.imr.export.interval=5000",
