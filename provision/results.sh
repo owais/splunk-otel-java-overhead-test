@@ -4,7 +4,7 @@
 
 source env.sh
 
-FIELD_SEQ=$(for f in `seq 0 16` ; do for a in `seq 0 5` ; do echo -n "\$$(($f+2+17*$a)) \",\" "; done; done )
+FIELD_SEQ=$(for f in `seq 0 17` ; do for a in `seq 0 5` ; do echo -n "\$$(($f+2+18*$a)) \",\" "; done; done )
 AWKPROG=$(echo "{ print \$1 \",\" ${FIELD_SEQ} }" | sed -e "s/.....}/}/")
 
 for dir in $( ssh splunker@${TESTBOX_HOST} ls results) ; do

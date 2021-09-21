@@ -12,6 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+
 class CsvPersister implements ResultsPersister {
 
   private final Path resultsFile;
@@ -46,6 +48,7 @@ class CsvPersister implements ResultsPersister {
       sb.append(",").append(result.maxJvmUserCpu);
       sb.append(",").append(result.averageMachineCpuTotal);
       sb.append(",").append(result.runDurationMs);
+      sb.append(",").append(NANOSECONDS.toMillis(result.totalGcPauseNanos));
     });
     sb.append("\n");
     try {
@@ -92,6 +95,7 @@ class CsvPersister implements ResultsPersister {
       sb.append(",").append(agent).append(":maxCpuUser");
       sb.append(",").append(agent).append(":averageMachineCpuTotal");
       sb.append(",").append(agent).append(":runDurationMs");
+      sb.append(",").append(agent).append(":gcPauseMs");
     });
     sb.append("\n");
     return sb.toString();

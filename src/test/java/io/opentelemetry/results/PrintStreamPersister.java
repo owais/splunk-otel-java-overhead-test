@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
+
 class PrintStreamPersister implements ResultsPersister {
 
   private final PrintStream out;
@@ -46,6 +48,7 @@ class PrintStreamPersister implements ResultsPersister {
     display(sorted, "Thread switch rate",
         res -> String.valueOf(res.maxThreadContextSwitchRate));
     display(sorted, "GC time", res -> String.valueOf(res.totalGCTime));
+    display(sorted, "GC pause time", res -> String.valueOf(NANOSECONDS.toMillis(res.totalGcPauseNanos)));
     display(sorted, "Req. mean", res -> format(res.requestAvg));
     display(sorted, "Req. p95", res -> format(res.requestP95));
     display(sorted, "Iter. mean", res -> format(res.iterationAvg));
