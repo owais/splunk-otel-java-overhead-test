@@ -3,6 +3,7 @@
   become: true
   tasks:
     - name: shut down splunk
+      ignore_errors: yes
       ansible.builtin.command:
         cmd: sudo /etc/init.d/splunk stop
     - name: shut down cloudwatch
