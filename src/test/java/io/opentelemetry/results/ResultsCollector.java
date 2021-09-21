@@ -87,7 +87,8 @@ public class ResultsCollector {
         .averageNetworkWrite(computeAverageNetworkWrite(jfrFile))
         .averageJvmUserCpu(computeAverageJvmUserCpu(jfrFile))
         .maxJvmUserCpu(computeMaxJvmUserCpu(jfrFile))
-        .averageMachineCpuTotal(computeAverageMachineCpuTotal(jfrFile));
+        .averageMachineCpuTotal(computeAverageMachineCpuTotal(jfrFile))
+        .totalGcPauseNanos(computeTotalGcPauseNanos(jfrFile));
   }
 
   private float computeAverageJvmUserCpu(Path jfrFile) throws IOException {
@@ -108,6 +109,10 @@ public class ResultsCollector {
 
   private long computeAverageNetworkWrite(Path jfrFile) throws IOException {
     return JFRUtils.findAverageLong(jfrFile, "jdk.NetworkUtilization", "writeRate");
+  }
+
+  private long computeTotalGcPauseNanos(Path jfrFile) throws IOException {
+    return JFRUtils.sumLongEventValues(jfrFile, "jdk.GCPhasePause", "duration");
   }
 
   private long readPeakThreadCount(Path jfrFile) throws IOException {

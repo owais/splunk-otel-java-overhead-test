@@ -27,6 +27,7 @@ public class AppPerfResults {
   final float maxJvmUserCpu;
   final float averageMachineCpuTotal;
   final long runDurationMs;
+  final long totalGcPauseNanos;
 
 
   private AppPerfResults(Builder builder) {
@@ -48,6 +49,7 @@ public class AppPerfResults {
     this.maxJvmUserCpu = builder.maxJvmUserCpu;
     this.averageMachineCpuTotal = builder.averageMachineCpuTotal;
     this.runDurationMs = builder.runDurationMs;
+    this.totalGcPauseNanos = builder.totalGcPauseNanos;
   }
 
   double getTotalAllocatedMB() {
@@ -80,6 +82,7 @@ public class AppPerfResults {
     public float maxJvmUserCpu;
     public float averageMachineCpuTotal;
     public long runDurationMs;
+    public long totalGcPauseNanos;
 
     AppPerfResults build() {
       return new AppPerfResults(this);
@@ -174,9 +177,12 @@ public class AppPerfResults {
       this.runDurationMs = runDurationMs;
       return this;
     }
+
+    Builder totalGcPauseNanos(long totalGcPauseNanos){
+      this.totalGcPauseNanos = totalGcPauseNanos;
+      return this;
+    }
   }
-
-
 
   public static class MinMax {
     public final long min;
