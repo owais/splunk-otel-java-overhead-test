@@ -66,6 +66,8 @@ public class PetClinicRestContainer {
             .withLogConsumer(new Slf4jLogConsumer(logger))
             .withExposedPorts(PETCLINIC_PORT)
             .withFileSystemBind(namingConventions.localResults(), namingConventions.containerResults())
+            .withCopyFileToContainer(
+                    MountableFile.forClasspathResource("overhead.jfc"), "/app/overhead.jfc")
             .waitingFor(Wait.forHttp("/petclinic/actuator/health").forPort(PETCLINIC_PORT))
             .withEnv("spring_profiles_active", "postgresql,spring-data-jpa")
             .withEnv("spring_datasource_url", "jdbc:postgresql://" + postgresHost + ":5432/" + PostgresContainer.DATABASE_NAME)

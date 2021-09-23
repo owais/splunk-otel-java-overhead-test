@@ -118,7 +118,7 @@ public class OverheadWithExternalsTests {
 
   private void startRecording(Agent agent, GenericContainer<?> petclinic) throws Exception {
     Path outFile = namingConventions.container.jfrFile(agent);
-    String[] command = {"jcmd", "1", "JFR.start", "settings=profile", "dumponexit=true", "name=petclinic", "filename=" + outFile};
+    String[] command = {"jcmd", "1", "JFR.start", "settings=/app/overhead.jfc", "dumponexit=true", "name=petclinic", "filename=" + outFile};
     petclinic.execInContainer(command);
   }
 
