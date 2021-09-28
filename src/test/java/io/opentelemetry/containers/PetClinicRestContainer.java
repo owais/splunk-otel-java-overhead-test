@@ -14,11 +14,13 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.images.builder.ImageFromDockerfile;
 import org.testcontainers.lifecycle.Startable;
-import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,23 +61,23 @@ public class PetClinicRestContainer {
 
     Optional<Path> agentJar = agentResolver.resolve(this.agent);
 
-    GenericContainer<?> container = new GenericContainer<>(
-            DockerImageName.parse("ghcr.io/open-telemetry/opentelemetry-java-instrumentation/petclinic-rest-base:latest"))
+    ImageFromDockerfile image = new ImageFromDockerfile().withDockerfile(Paths.get("src/test/resources/Dockerfile-petclinic-yourkit"));
+
+    GenericContainer<?> container = new GenericContainer<>(image)
             .withNetwork(network)
             .withNetworkAliases("petclinic")
             .withLogConsumer(new Slf4jLogConsumer(logger))
-            .withExposedPorts(PETCLINIC_PORT)
+            .withExposedPorts(PETCLINIC_PORT, 10001)
             .withFileSystemBind(namingConventions.localResults(), namingConventions.containerResults())
             .withCopyFileToContainer(
                     MountableFile.forClasspathResource("overhead.jfc"), "/app/overhead.jfc")
-            .waitingFor(Wait.forHttp("/petclinic/actuator/health").forPort(PETCLINIC_PORT))
+            .waitingFor(Wait.forHttp("/petclinic/actuator/health").forPort(PETCLINIC_PORT).withReadTimeout(Duration.ofMinutes(15)).withStartupTimeout(Duration.ofMinutes(15)))
             .withEnv("spring_profiles_active", "postgresql,spring-data-jpa")
             .withEnv("spring_datasource_url", "jdbc:postgresql://" + postgresHost + ":5432/" + PostgresContainer.DATABASE_NAME)
             .withEnv("spring_datasource_username", PostgresContainer.USERNAME)
             .withEnv("spring_datasource_password", PostgresContainer.PASSWORD)
             .withEnv("spring_jpa_hibernate_ddl-auto", "none")
             .withCommand(buildCommandline(agentJar));
-
     if(collector != null){
       container = container.dependsOn(collector);
     }
@@ -99,6 +101,7 @@ public class PetClinicRestContainer {
         "java",
         "-Xmx2g",
         "-XX:+AlwaysPreTouch",
+        "-agentpath:/usr/local/YourKit-JavaProfiler-2021.3/bin/linux-x86-64/libyjpagent.so=port=10001,listen=all",
         "-Dotel.traces.exporter=otlp",
         "-Dotel.imr.export.interval=5000",
         "-Dotel.exporter.otlp.insecure=true",

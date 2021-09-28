@@ -1,0 +1,7 @@
+FROM ghcr.io/open-telemetry/opentelemetry-java-instrumentation/petclinic-rest-base:latest
+
+RUN wget https://www.yourkit.com/download/docker/YourKit-JavaProfiler-2021.3-docker.zip -P /tmp/ && \
+  unzip /tmp/YourKit-JavaProfiler-2021.3-docker.zip -d /usr/local && \
+  rm /tmp/YourKit-JavaProfiler-2021.3-docker.zip
+
+EXPOSE 10001

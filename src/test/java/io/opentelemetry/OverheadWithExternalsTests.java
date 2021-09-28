@@ -25,6 +25,7 @@ import org.testcontainers.utility.MountableFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,7 +133,7 @@ public class OverheadWithExternalsTests {
           .withCopyFileToContainer(
               MountableFile.forHostPath("./k6"), "/app")
           .withCommand("run", "-u", "5", "-i", "25", "/app/basic.js")
-          .withStartupCheckStrategy(new OneShotStartupCheckStrategy());
+          .withStartupCheckStrategy(new OneShotStartupCheckStrategy().withTimeout(Duration.ofMinutes(15)));
       k6.start();
     }
     System.out.println("Warmup complete.");
