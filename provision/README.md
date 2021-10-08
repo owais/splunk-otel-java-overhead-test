@@ -79,6 +79,7 @@ $ source env.sh
 $ ssh splunker@${TESTBOX_HOST}
 $ screen 
 $ EXTERNALS_HOST=<externals_host> ./gradlew --no-daemon cleanTest test
+```
 
 # misc
 
