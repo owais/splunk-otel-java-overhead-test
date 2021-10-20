@@ -11,27 +11,36 @@ public class Agent {
 
   final static String OTEL_LATEST = "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent-all.jar";
 
-  public final static Agent NONE = new Agent("none", "no agent at all");
+  public final static Agent NONE = new Agent("none", "no agent at all", null,
+          List.of("-javaagent:burden.jar",
+          "-DBURDEN_ALLOCATE_MB=1050"));
   public final static Agent LATEST_UPSTREAM_RELEASE = new Agent("latest", "latest mainstream release", OTEL_LATEST);
   public final static Agent LATEST_UPSTREAM_SNAPSHOT = new Agent("snapshot", "latest available snapshot version from main");
 
-  private final static String SPLUNK_AGENT_URL = "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.3.1/splunk-otel-javaagent-1.3.1-all.jar";
+  private final static String SPLUNK_AGENT_URL = "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.5.0/splunk-otel-javaagent-1.5.0-all.jar";
   private final static String SPLUNK_SNAPSHOT_AGENT_URL = "https://oss.sonatype.org/content/repositories/snapshots/com/splunk/splunk-otel-javaagent/1.5.0-SNAPSHOT/splunk-otel-javaagent-1.5.0-20211006.190447-25.jar";
 
-  public final static Agent SPLUNK_OTEL = new Agent("splunk-otel", "splunk-otel-java 1.5.0-snapshot", SPLUNK_SNAPSHOT_AGENT_URL);
+  public final static Agent SPLUNK_OTEL = new Agent("splunk-otel", "splunk-otel-java 1.5.0-snapshot",
+          SPLUNK_AGENT_URL,
+          List.of("-javaagent:burden.jar",
+                  "-DBURDEN_ALLOCATE_MB=1050"));
   public final static Agent SPLUNK_PROFILER = new Agent("profiler", "splunk-otel-java 1.5.0-snapshot",
-          SPLUNK_SNAPSHOT_AGENT_URL,
-          List.of("-Dsplunk.profiler.enabled=true"));
+          SPLUNK_AGENT_URL,
+          List.of("-Dsplunk.profiler.enabled=true",
+                  "-javaagent:burden.jar",
+                  "-DBURDEN_ALLOCATE_MB=1050"));
 
   public final static Agent SPLUNK_PROFILER_W_TLAB_1SS = new Agent("profiler-tlab-1ss", "splunk-otel-java 1.5.0-snapshot",
-          SPLUNK_SNAPSHOT_AGENT_URL,
-          List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true"));
+          SPLUNK_AGENT_URL,
+          List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true",
+                  "-javaagent:burden.jar",
+                  "-DBURDEN_ALLOCATE_MB=1050"));
 
-  public final static Agent SPLUNK_PROFILER_W_TLAB_10SS = new Agent("profiler-tlab-10ss", "splunk-otel-java 1.3.1",
+  public final static Agent SPLUNK_PROFILER_W_TLAB_10SS = new Agent("profiler-tlab-10ss", "splunk-otel-java 1.5.0",
           SPLUNK_AGENT_URL,
           List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true", "-Dsplunk.profiler.period.threaddump=100"));
 
-  public final static Agent SPLUNK_PROFILER_W_TLAB_100SS = new Agent("profiler-tlab-100ss", "splunk-otel-java 1.3.1",
+  public final static Agent SPLUNK_PROFILER_W_TLAB_100SS = new Agent("profiler-tlab-100ss", "splunk-otel-java 1.5.0",
           SPLUNK_AGENT_URL,
           List.of("-Dsplunk.profiler.enabled=true", "-Dsplunk.profiler.tlab.enabled=true", "-Dsplunk.profiler.period.threaddump=10"));
 

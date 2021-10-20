@@ -6,10 +6,18 @@
       ignore_errors: yes
       ansible.builtin.command:
         cmd: sudo /etc/init.d/splunk stop
+    - name: shut down splunk another way too
+      ignore_errors: yes
+      ansible.builtin.command:
+        cmd: sudo /opt/nova/splunkforwarder/bin/splunk stop
     - name: shut down cloudwatch
       ignore_errors: yes
       ansible.builtin.command:
         cmd: sudo service amazon-cloudwatch-agent stop
+    - name: shut down unattended upgrades
+      ignore_errors: yes
+      ansible.builtin.command:
+        cmd: systemctl stop unattended-upgrades.service
     - name: shut down amazon ssm service
       ansible.builtin.command:
         cmd: sudo service snap.amazon-ssm-agent.amazon-ssm-agent stop

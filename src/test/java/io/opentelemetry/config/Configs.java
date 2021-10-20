@@ -25,10 +25,11 @@ public enum Configs {
       .description("multiple agent configurations compared")
 //      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER, Agent.SPLUNK_PROFILER_W_TLAB_1SS, Agent.SPLUNK_PROFILER_W_TLAB_10SS, Agent.SPLUNK_PROFILER_W_TLAB_100SS)
       .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER, Agent.SPLUNK_PROFILER_W_TLAB_1SS)
-      .totalIterations(500)
+//      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL)
+      .totalIterations(8500)
       .warmupSeconds(60)
-      .maxRequestRate(50)
-//      .concurrentConnections(2)
+      .maxRequestRate(900)
+      .concurrentConnections(30)
       .build()),
 
 //  RELEASEx1(TestConfig.builder()
