@@ -27,7 +27,7 @@ $ brew install jinja2-cli
 
 Visit: https://splunkit.io/ec2
 
-Create one instance called "testbox" and one instance called "testbox". 
+Create one instance called "testbox" and one instance called "externals". 
 
 ## set up env.sh
 
