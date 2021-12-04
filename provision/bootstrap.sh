@@ -5,7 +5,16 @@
 
 source env.sh
 
-jinja2 -D testbox_host=${TESTBOX_HOST} -D externals_host=${EXTERNALS_HOST} \
+jinja2 \
+    -D testbox_host=${TESTBOX_HOST} \
+    -D externals_host=${EXTERNALS_HOST} \
+    -D ansible_user=root \
+    ansible/hosts.yml.jinja > ansible/root.hosts.yml
+
+jinja2 \
+    -D testbox_host=${TESTBOX_HOST} \
+    -D externals_host=${EXTERNALS_HOST} \
+    -D ansible_user=splunk \
     ansible/hosts.yml.jinja > ansible/hosts.yml
 
-ansible-playbook -i ansible/hosts.yml --ask-pass ansible/bootstrap-ssh.yml
+ansible-playbook -i ansible/root.hosts.yml ansible/bootstrap-user.yml

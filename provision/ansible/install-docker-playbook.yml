@@ -7,16 +7,22 @@
 
 - name: Add Docker GPG apt Key
   apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
+#    url: https://download.docker.com/linux/ubuntu/gpg
+    url: https://download.docker.com/linux/debian/gpg
     state: present
 
 - name: Add Docker Repository
   apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+#    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    repo: deb https://download.docker.com/linux/debian stretch stable
     state: present
 
 - name: Update apt and install docker-ce
   apt: update_cache=yes name=docker-ce state=latest
+
+- name: Install python-pip because stretch is still on python 2.7
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: [ 'python-pip']
 
 - name: Install Docker Module for Python
   pip:
@@ -27,8 +33,8 @@
     name: docker
     state: present
 
-- name: adding splunker to docker group
+- name: adding splunk user to docker group
   user:
-    name: splunker
+    name: splunk
     groups: docker
     append: yes
