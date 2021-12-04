@@ -92,3 +92,23 @@ then
 ```
 awk -F, '{ print $1 "," <bigstring> }' results.csv
 ```
+
+
+# orca
+
+```
+orca --cloud aws create --no-provision \
+    --prefix externals \
+    --aws-instance-type m4.large \
+    --labels retention_time=86400 \ 
+
+orca --cloud aws show containers
+orca --cloud aws show deployments
+ 
+orca --cloud aws show containers | grep -A 2 testbox | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//"
+ 
+ssh -i ~/.orca/id_rsa root@10.224.20.74
+
+ssh -o "StrictHostKeyChecking=no" -i ~/.orca/id_rsa root@$(orca --cloud aws show containers | grep -A 2 testbox | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//")
+ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -i ~/.orca/id_rsa root@$(orca --cloud aws show containers | grep -A 2 testbox | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//")
+```
