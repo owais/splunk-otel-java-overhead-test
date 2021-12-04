@@ -2,74 +2,56 @@
 - hosts: testbox
   become: true
   tasks:
-    - name: shut down splunk
-      ignore_errors: yes
-      ansible.builtin.command:
-        cmd: sudo /etc/init.d/splunk stop
-    - name: shut down splunk another way too
-      ignore_errors: yes
-      ansible.builtin.command:
-        cmd: sudo /opt/nova/splunkforwarder/bin/splunk stop
-    - name: shut down cloudwatch
-      ignore_errors: yes
-      ansible.builtin.command:
-        cmd: sudo service amazon-cloudwatch-agent stop
-    - name: shut down unattended upgrades
-      ignore_errors: yes
-      ansible.builtin.command:
-        cmd: systemctl stop unattended-upgrades.service
-    - name: shut down amazon ssm service
-      ansible.builtin.command:
-        cmd: sudo service snap.amazon-ssm-agent.amazon-ssm-agent stop
     - name: remove unwanted packages
       apt:
         state: absent
         name:
           - unattended-upgrades
           - snapd
-    - name: install java 11 jdk and screen
+    - name: install java 11 jdk and screen and rsync
       apt:
         name:
           - screen
+          - rsync
           - openjdk-11-jdk-headless
     - name: Install docker on ubuntu
       import_tasks: install-docker-playbook.yml
     - name: copy k6 directory
       ansible.posix.synchronize:
         src: ../../k6
-        dest: /home/splunker/
+        dest: /home/splunk/
     - name: copy project src directory
       ansible.posix.synchronize:
         src: ../../src
-        dest: /home/splunker/
+        dest: /home/splunk/
     - name: copy gradle directory
       ansible.posix.synchronize:
         src: ../../gradle
-        dest: /home/splunker/
+        dest: /home/splunk/
     - name: copy gradle settings
       ansible.posix.synchronize:
         src: ../../settings.gradle.kts
-        dest: /home/splunker/
+        dest: /home/splunk/
     - name: copy gradle build script
       ansible.posix.synchronize:
         src: ../../build.gradle.kts
-        dest: /home/splunker/
+        dest: /home/splunk/
     - name: copy gradle wrapper
       ansible.posix.synchronize:
         src: ../../gradlew
-        dest: /home/splunker/
+        dest: /home/splunk/
     - name: copy run10 script
       ansible.builtin.template:
         src: run10.sh.jinja
-        dest: /home/splunker/run10.sh
-        owner: splunker
+        dest: /home/splunk/run10.sh
+        owner: splunk
         group: users
         mode: 0755
     - name: chown copied files
       ansible.builtin.command:
-        cmd: 'chown -R splunker:users k6 src gradle build.gradle.kts gradlew settings.gradle.kts'
+        cmd: 'chown -R splunk:users k6 src gradle build.gradle.kts gradlew settings.gradle.kts'
     - name: run the build
       become: yes
-      become_user: splunker
+      become_user: splunk
       ansible.builtin.command:
         cmd: ./gradlew compileTestJava
