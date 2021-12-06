@@ -59,18 +59,6 @@ ssh -f -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" \
 
 The `10` in the command is the number of passes to perform.
 
-# misc
-
-make strings that can be fed to awk....
-```
-for f in `seq 0 15` ; do for a in `seq 0 5` ; do echo -n "\$$(($f+2+15*$a)) \",\" "; done; done
-```
-
-then 
-```
-awk -F, '{ print $1 "," <bigstring> }' results.csv
-```
-
 # orca cheatsheet
 
 Look at existing deployments:
