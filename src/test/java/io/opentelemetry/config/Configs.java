@@ -21,7 +21,7 @@ public enum Configs {
 //      .totalIterations(15)
 //      .build()),
   RELEASE(TestConfig.builder()
-      .name("release_1ss_5vu_8500iter")
+      .name("release_30vu_8500iter")
       .description("multiple agent configurations compared")
       .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER)
       .totalIterations(8500)
