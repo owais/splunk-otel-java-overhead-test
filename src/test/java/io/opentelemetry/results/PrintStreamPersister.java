@@ -33,11 +33,11 @@ class PrintStreamPersister implements ResultsPersister {
     out.printf(" %d users, %d iterations\n", config.getConcurrentConnections(), config.getTotalIterations());
     out.println("----------------------------------------------------------");
 
+    display(sorted, "Agent", appPerfResults -> appPerfResults.agent.getName());
     display(sorted, "Run duration", res -> {
       Duration duration = Duration.ofMillis(res.runDurationMs);
       return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
     });
-    display(sorted, "Agent", appPerfResults -> appPerfResults.agent.getName());
     display(sorted, "Avg. CPU (user)", res -> String.valueOf(res.averageJvmUserCpu));
     display(sorted, "Max. CPU (user)", res -> String.valueOf(res.maxJvmUserCpu));
     display(sorted, "Avg. mch tot cpu", res -> String.valueOf(res.averageMachineCpuTotal));
