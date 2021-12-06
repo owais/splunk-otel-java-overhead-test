@@ -2,7 +2,15 @@
 
 # You should run this within screen
 
-for i in `seq 1 10` ; do
+NUM_PASSES=1
+
+if [ "$#" != "0" ] ; then
+  NUM_PASSES=$1
+fi
+
+echo Running $NUM_PASSES test passes...
+
+for i in `seq 1 ${NUM_PASSES}` ; do
   now=$(date)
   echo "${now} - Starting pass ${i}..."
   EXTERNALS_HOST={{externals_host}} ./gradlew --no-daemon cleanTest test

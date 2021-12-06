@@ -40,10 +40,10 @@
       ansible.posix.synchronize:
         src: ../../gradlew
         dest: /home/splunk/
-    - name: copy run10 script
+    - name: copy run-tests script
       ansible.builtin.template:
-        src: run10.sh.jinja
-        dest: /home/splunk/run10.sh
+        src: run-tests.sh.jinja
+        dest: /home/splunk/run-tests.sh
         owner: splunk
         group: users
         mode: 0755
