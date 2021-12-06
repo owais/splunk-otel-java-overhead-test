@@ -21,33 +21,14 @@ public enum Configs {
 //      .totalIterations(15)
 //      .build()),
   RELEASE(TestConfig.builder()
-      .name("release_1ss_5vu_500iter")
+      .name("release_30vu_8500iter")
       .description("multiple agent configurations compared")
-//      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER, Agent.SPLUNK_PROFILER_W_TLAB_1SS, Agent.SPLUNK_PROFILER_W_TLAB_10SS, Agent.SPLUNK_PROFILER_W_TLAB_100SS)
-      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER, Agent.SPLUNK_PROFILER_W_TLAB_1SS)
-//      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL)
+      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER)
       .totalIterations(8500)
       .warmupSeconds(60)
       .maxRequestRate(900)
       .concurrentConnections(30)
-      .build()),
-
-//  RELEASEx1(TestConfig.builder()
-//      .name("release_10ss_5vu_500iter")
-//      .description("multiple agent configurations compared")
-//      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER, Agent.SPLUNK_PROFILER_W_TLAB_10SS)
-//      .totalIterations(500)
-//      .warmupSeconds(60)
-//      .build()),
-//
-//  RELEASEx2(TestConfig.builder()
-//      .name("release_100ss_5vu_500iter")
-//      .description("multiple agent configurations compared")
-//      .withAgents(Agent.NONE, Agent.SPLUNK_OTEL, Agent.SPLUNK_PROFILER, Agent.SPLUNK_PROFILER_W_TLAB_100SS)
-//      .totalIterations(500)
-//      .warmupSeconds(60)
-//      .build()),
-  ;
+      .build());
 
   public final TestConfig config;
 
