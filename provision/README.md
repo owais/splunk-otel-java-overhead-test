@@ -1,14 +1,22 @@
-This is automation tooling used to provision and configure 
-the EC2 instances used for this test.
+The overhead tests attempt to reduce the impact of noisy neighbors by provisioning
+the collector and postgres services on a separate cloud instance.
 
-It is assumed that ec2 instances are stood up in https://splunkit.io/ec2 (by hand)
-but can be configured via automation (ansible).
+This directory contains automation tooling used to provision and configure 
+the EC2 instances used for this test. It uses an internal Slunk tool 
+called [Orca](https://core-ee.splunkdev.page/orca/) to do the provisioning 
+and ansible to automatically configure the VMs.
+
+At the time of this writing, provisioning takes about 12 minutes.
 
 # setup
 
 * You need to be on the corporate VPN.
-* You need an ssh keypair in `~/.ssh/id_rsa.pub` and `~/.ssh/id_rsa`
-* You probably want to `ssh-add ~/.ssh/id_rsa.pub` to cache your key pass
+* You need to be a member of the `ssg-orca-aws-users` LDAP group. Follow the docs and links here [to request access](https://core-ee.splunkdev.page/orca/docs/providers/aws#through-cli).
+
+## install orca
+
+Orca is a Splunk-internal tool for provisioning cloud instances.
+[Go here to learn how to set it up](https://core-ee.splunkdev.page/orca/docs/setup).
 
 ## install ansible
 
@@ -23,63 +31,33 @@ $ brew install ansible
 $ brew install jinja2-cli
 ```
 
-## create hosts in nova
+# provisioning
 
-Visit: https://splunkit.io/ec2
+Provisioning will create one instance called "testbox" and one instance called "externals".
 
-Create one instance called "testbox" and one instance called "externals". 
-
-## set up env.sh
-
-This small script will be used to template the ansible inventory.
-There may be a smarter way of doing this, but for now, create a file
-named `env.sh` and replace the two hostnames with the hosts
-from your nova setup.
-
+Orca vault auth tokens are only good for maybe 24 hours. Before provisioning, you
+probably want to reset the token by running:
 ```
-# Contains specific ephemeral environment information
-
-export TESTBOX_HOST=<your testbox hostname>
-export EXTERNALS_HOST=<your externals box hostname>
+orca config auth
 ```
+and entering your user/pass (you can leave the team blank).
 
-It stinks that this step is manual, but it should be the last thing.
+Next, run `./provision` and wait about 12 minutes.
 
-## configure ssh
-
-By default, nova hosts use password login for ssh, which isn't great.
-Let's get our public key set up for ssh access:
-
-```
-$ ./bootstrap.sh
-```
-
-Enter the interactive password for the `splunker` user when prompted.
-You only have to do this once after creating the hosts in nova.
-If they get destroyed, you'll run this again.
-
-# run
-
-This is how you run the provisioning steps. The first one sets up the
-externals host (where postgres and collector run) and the other
-sets up the testbox itself.
-
-```
-$ ansible-playbook -i ansible/hosts.yml ansible/externals-playbook.yml
-$ ansible-playbook -i ansible/hosts.yml ansible/testbox-playbook.yml
-```
+If all is successful, your two instances should be set up and ready to use. You
+can verify with `orca --cloud aws show containers`
 
 # run tests
 
-The tests run on the testbox instance. It is recommended to run within `screen`
-because the tests take a long time.
+To start the tests on the `TESTBOX_HOST` backgrounded in `screen`:
+```
+source env.sh
+ssh -f -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" \    
+    -i ~/.orca/id_rsa splunk@${TESTBOX_HOST} \
+    'screen -dm bash -c "./run-tests.sh 10; bash"'
+```
 
-```
-$ source env.sh
-$ ssh splunker@${TESTBOX_HOST}
-$ screen 
-$ EXTERNALS_HOST=<externals_host> ./gradlew --no-daemon cleanTest test
-```
+The `10` in the command is the number of passes to perform.
 
 # misc
 
@@ -93,22 +71,39 @@ then
 awk -F, '{ print $1 "," <bigstring> }' results.csv
 ```
 
+# orca cheatsheet
 
-# orca
+Look at existing deployments:
 
+```
+orca --cloud aws show deployments
+```
+
+Look at existing containers:
+
+```
+orca --cloud aws show containers
+```
+
+Create a bare ec2 instance. See `bootstrap-orca.sh` for better examples.
 ```
 orca --cloud aws create --no-provision \
     --prefix externals \
     --aws-instance-type m4.large \
     --labels retention_time=86400 \ 
-
-orca --cloud aws show containers
-orca --cloud aws show deployments
  
-orca --cloud aws show containers | grep -A 2 testbox | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//"
- 
-ssh -i ~/.orca/id_rsa root@10.224.20.74
+```
 
-ssh -o "StrictHostKeyChecking=no" -i ~/.orca/id_rsa root@$(orca --cloud aws show containers | grep -A 2 testbox | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//")
-ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -i ~/.orca/id_rsa root@$(orca --cloud aws show containers | grep -A 2 testbox | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//")
+Get a shell on the testbox:
+```
+ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" \
+    -i ~/.orca/id_rsa \
+    splunk@$(orca --cloud aws show containers | grep -A 2 testbox | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//")
+```
+
+Get a shell on the externals box:
+```
+ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" \
+    -i ~/.orca/id_rsa \
+    splunk@$(orca --cloud aws show containers | grep -A 2 externals | grep Splunkd | sed -e "s/.*https:..//" | sed -e "s/:.*//")
 ```
