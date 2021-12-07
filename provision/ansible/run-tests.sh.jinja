@@ -13,5 +13,7 @@ echo Running $NUM_PASSES test passes...
 for i in `seq 1 ${NUM_PASSES}` ; do
   now=$(date)
   echo "${now} - Starting pass ${i}..."
+  echo "RUNNING ${i} of ${NUM_PASSES}" > /tmp/passnum.txt
   EXTERNALS_HOST={{externals_host}} ./gradlew --no-daemon cleanTest test
+  echo "FINISHED ${i} of ${NUM_PASSES}" > /tmp/passnum.txt
 done
