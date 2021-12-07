@@ -49,12 +49,17 @@ can verify with `orca --cloud aws show containers`
 
 # run tests
 
-To start the tests on the `TESTBOX_HOST` backgrounded in `screen`:
+To start the tests on the `TESTBOX_HOST` backgrounded in `screen`, simply 
+run the `start-remote-test.sh` script.
+
+It may take a few seconds for the test to start, but once it does, you 
+can check the progress by running the `check-test-progress.sh` script like
+this:
+
 ```
-source env.sh
-ssh -f -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" \    
-    -i ~/.orca/id_rsa splunk@${TESTBOX_HOST} \
-    'screen -dm bash -c "./run-tests.sh 10; bash"'
+$ ./check-test-progress.sh
+RUNNING 2 of 10
+Config 1/1 Agent 2/3 - Total 2/3
 ```
 
 The `10` in the command is the number of passes to perform.
