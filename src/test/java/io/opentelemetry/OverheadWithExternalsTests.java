@@ -117,7 +117,7 @@ public class OverheadWithExternalsTests {
     writeStartupTimeFile(agent, start);
 
     if(config.getWarmupSeconds() > 0){
-      doWarmupPhase(config);
+      doWarmupPhase(config, petclinic);
     }
 
     long testStart = System.currentTimeMillis();
@@ -155,9 +155,14 @@ public class OverheadWithExternalsTests {
     petclinic.execInContainer(command);
   }
 
-  private void doWarmupPhase(TestConfig testConfig) {
-    long start = System.currentTimeMillis();
+  private void doWarmupPhase(TestConfig testConfig, GenericContainer<?> petclinic) throws IOException, InterruptedException {
     System.out.println("Performing startup warming phase for " + testConfig.getWarmupSeconds() + " seconds...");
+
+    System.out.println("Starting disposable JFR warmup recording...");
+    String[] startCommand = {"jcmd", "1", "JFR.start", "settings=/app/overhead.jfc", "dumponexit=true", "name=warmup", "filename=warmup.jfr"};
+    petclinic.execInContainer(startCommand);
+
+    long start = System.currentTimeMillis();
     while(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start) < testConfig.getWarmupSeconds()){
       GenericContainer<?> k6 = new GenericContainer<>(
           DockerImageName.parse("loadimpact/k6"))
@@ -168,6 +173,11 @@ public class OverheadWithExternalsTests {
           .withStartupCheckStrategy(new OneShotStartupCheckStrategy());
       k6.start();
     }
+
+    System.out.println("Stopping disposable JFR warmup recording...");
+    String[] stopCommand = {"jcmd", "1", "JFR.stop", "name=warmup"};
+    petclinic.execInContainer(stopCommand);
+
     System.out.println("Warmup complete.");
   }
 
