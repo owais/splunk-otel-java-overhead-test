@@ -1,3 +1,17 @@
+#  https://help.github.com/en/articles/about-code-owners
+#
+# Global Owners
 * @signalfx/gdi-java-maintainers @signalfx/gdi-java-approvers @breedx-splk
 
-CODEOWNERS @signalfx/gdi-java-maintainers
+.github/CODEOWNERS @signalfx/gdi-java-maintainers
+
+#####################################################
+#
+# Docs reviewers
+#
+#####################################################
+
+*.md    @signalfx/gdi-java-maintainers @signalfx/gdi-java-approvers @breedx-splk @signalfx/gdi-docs
+*.rst   @@signalfx/gdi-java-maintainers @signalfx/gdi-java-approvers @breedx-splk @signalfx/gdi-docs
+docs/   @signalfx/gdi-java-maintainers @signalfx/gdi-java-approvers @breedx-splk @signalfx/gdi-docs
+README* @signalfx/gdi-java-maintainers @signalfx/gdi-java-approvers @breedx-splk @signalfx/gdi-docs @signalfx/gdi-specification-approvers @signalfx/gdi-specification-maintainers
