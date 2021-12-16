@@ -110,17 +110,20 @@ This sequence is executed 10 times:
   * collect results and write to csv 
   
 The k6 test script contains 12 REST operations, so after all 10 test
-runs are complete, each agent has seen more than 1M rest calls.
+runs are complete, each agent has seen more than 1M REST calls.
 
-Measurements are derived from k6 and from JFR.
+Measurements are derived from k6 and from JFR data and aggregated across all 10 runs.
+The results are saved to a CSV file and the final run is summarized in a txt file.
 
 ## Configuration
 
-externals: m4.xlarge instance
+`externals` instance: 
+* m4.xlarge
 * 2 vCPU
 * 8 GiB memory
 
-testbox: m4.large instance
+`testbox` instance: 
+* m4.large
 * 4 vCPU
 * 16 GiB memory
 
@@ -145,7 +148,7 @@ TBD
 
 # Performing your own tests
 
-YMMV.
+YMMV. This will eventually contain guidance.
 
 # License
 
