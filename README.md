@@ -1,4 +1,4 @@
-# splunk-otel-java-overhead-test
+# Performance overhead tests for the Splunk OTel Java Agent
 
 This repository contains documentation, tools, and results concerning
 the "overhead" of the [Splunk distribution](https://github.com/signalfx/splunk-otel-java) of the 
