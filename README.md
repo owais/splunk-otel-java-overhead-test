@@ -110,7 +110,7 @@ This sequence is executed 10 times:
   * collect results and write to csv 
   
 The k6 test script contains 12 REST operations, so after all 10 test
-runs are complete, each agent has seen more than 1M REST calls.
+runs are complete, each agent has seen more than 1 million REST calls.
 
 Measurements are derived from k6 and from JFR data and aggregated across all 10 runs.
 The results are saved to a CSV file and the final run is summarized in a txt file.
