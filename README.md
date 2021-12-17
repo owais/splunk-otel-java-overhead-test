@@ -36,7 +36,7 @@ Your results will be different from the results contained here, but they are exp
 be somewhat similar. The only guaranteed way to know the actual overhead of an instrumentation
 agent in a given deployment is to conduct experiments and perform measurements.
 
-# Approach
+# Testing approach
 
 Given the above, we have designed and built a test suite that quantifies the agent
 overhead for a typical style of microservice under fixed conditions.
