@@ -87,7 +87,7 @@ and the results are compared between run configurations.
 ## How we measure
 
 We define 3 run configurations:
-* no instrumentation
+* No instrumentation
 * Splunk OpenTelemetry java instrumentation agent
 * Splunk OpenTelemetry java instrumentation agent w/ profiling enabled
 
