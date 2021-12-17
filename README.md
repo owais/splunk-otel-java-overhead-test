@@ -12,12 +12,11 @@ like CPU, memory, and network in order to function. This use of resources is
 often referred to as "overhead" or "agent overhead", and it often means different things 
 to different people.
 
-In the worst case scenario, the instrumentation agent would consume so many resources
-that the application being observed suffers greatly. In an ideal scenario, the overhead 
-of an instrumentation agent would be zero (no overhead); however, this is unrealistic.
-In reality, we find that instrumentation agents are considerably low overhead and 
-that the rich insights gained by observing the application behavior is much more valuable
-than the resources consumed by instrumentation.
+In an ideal scenario, the overhead of an instrumentation agent would be zero 
+(no overhead); however, this is unrealistic. In reality, we find that instrumentation 
+agents are considerably low overhead and that the rich insights gained by observing 
+the application behavior is much more valuable than the resources consumed by 
+the instrumentation.
 
 Due to the extreme complexity of modern software systems and the broad diversity in 
 the deployment landscape, it is effectively impossible to come up with a single "overhead" number.
