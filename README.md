@@ -88,8 +88,8 @@ and the results are compared between run configurations.
 
 We define 3 run configurations:
 * No instrumentation
-* Splunk OpenTelemetry java instrumentation agent
-* Splunk OpenTelemetry java instrumentation agent w/ profiling enabled
+* Splunk OpenTelemetry Java Agent
+* Splunk OpenTelemetry Java Agent with AlwaysOn Profiling enabled
 
 Each test _run_ executes every configuration of the microservice in a fresh JVM.
 
