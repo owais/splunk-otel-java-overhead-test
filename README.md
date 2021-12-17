@@ -140,7 +140,6 @@ for java 11 and is used across all tests.
   meaningful and consistent results, we have taken care to ensure that the microservice
   is not starved for resources and has satisfactory CPU and memory headroom to operate
   normally.
-* 
 
 # Conclusions
 
