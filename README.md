@@ -21,8 +21,8 @@ than the resources consumed by instrumentation.
 
 Due to the extreme complexity of modern software systems and the broad diversity in 
 the deployment landscape, it is effectively impossible to come up with a single "overhead" number.
-The actual overhead depends on a massive number of variables. When attempting to measure (or 
-even talk about!) talk about "overhead", one must take these variables into consideration.
+The actual overhead depends on a massive number of variables. When attempting to measure or
+even discuss overhead, one must take many variables into consideration.
 
 Some variables that can impact overhead are environmental, such as physical machine architecture, 
 CPU frequency, amount and speed of memory, temperature, and generalized resource contention.
