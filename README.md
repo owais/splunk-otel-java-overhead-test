@@ -1,7 +1,7 @@
 # Performance overhead tests for the Splunk OTel Java Agent
 
 This repository contains documentation, tools, and results concerning
-the "overhead" of the [Splunk distribution](https://github.com/signalfx/splunk-otel-java) of the 
+the impact on performance of the [Splunk distribution](https://github.com/signalfx/splunk-otel-java) of the 
 [OpenTelemetry Java Instrumentation Agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation).
 
 # Background
