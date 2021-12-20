@@ -25,6 +25,7 @@ public class AppPerfResults {
   final long averageNetworkWrite;
   final float averageJvmUserCpu;
   final float maxJvmUserCpu;
+  final float averageJvmSystemCpu;
   final float averageMachineCpuTotal;
   final long runDurationMs;
   final long totalGcPauseNanos;
@@ -47,6 +48,7 @@ public class AppPerfResults {
     this.averageNetworkWrite = builder.averageNetworkWrite;
     this.averageJvmUserCpu = builder.averageJvmUserCpu;
     this.maxJvmUserCpu = builder.maxJvmUserCpu;
+    this.averageJvmSystemCpu = builder.averageJvmSystemCpu;
     this.averageMachineCpuTotal = builder.averageMachineCpuTotal;
     this.runDurationMs = builder.runDurationMs;
     this.totalGcPauseNanos = builder.totalGcPauseNanos;
@@ -80,6 +82,7 @@ public class AppPerfResults {
     public long averageNetworkWrite;
     public float averageJvmUserCpu;
     public float maxJvmUserCpu;
+    public float averageJvmSystemCpu;
     public float averageMachineCpuTotal;
     public long runDurationMs;
     public long totalGcPauseNanos;
@@ -160,6 +163,11 @@ public class AppPerfResults {
 
     Builder averageJvmUserCpu(float averageJvmUserCpu){
       this.averageJvmUserCpu = averageJvmUserCpu;
+      return this;
+    }
+
+    Builder averageJvmSystemCpu(float averageJvmSystemCpu){
+      this.averageJvmSystemCpu = averageJvmSystemCpu;
       return this;
     }
 

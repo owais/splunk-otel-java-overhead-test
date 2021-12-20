@@ -33,6 +33,7 @@ class CsvPersister implements ResultsPersister {
     FieldSpec.of("netWriteAvg", r -> r.averageNetworkWrite),
     FieldSpec.of("peakThreadCount", r -> r.peakThreadCount),
     FieldSpec.of("averageCpuUser", r -> r.averageJvmUserCpu),
+    FieldSpec.of("averageCpuSystem", r -> r.averageJvmSystemCpu),
     FieldSpec.of("maxCpuUser", r -> r.maxJvmUserCpu),
     FieldSpec.of("averageMachineCpuTotal", r -> r.averageMachineCpuTotal),
     FieldSpec.of("runDurationMs", r -> r.runDurationMs),
