@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=”UTF-8">
+    <meta name=”viewport” content=”width=device-width, initial-scale=1.0">
+    <title>OpenTelemetry Java Agent Overhead</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="overhead.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="data-client.js"></script>
+    <script src="data-util.js"></script>
+    <script src="overhead.js"></script>
+</head>
+<body>
+<ul class="sidenav sidenav-fixed">
+    <li><a href="#a-startup">Startup</a></li>
+    <li><a href="#a-avgcpu">Average CPU (user)</a></li>
+    <li><a href="">Max CPU (user)</a></li>
+    <li><a href="">Max Heap</a></li>
+    <li><a href="">Total Allocated</a></li>
+    <li><a href="">Total GC Time</a></li>
+    <li><a href="">Total GC Pause Time</a></li>
+    <li><a href="">Script duration</a></li>
+    <li><a href="">Script Duration</a></li>
+    <li><a href="">Request Latency</a></li>
+    <li><a href="">Request Latency (p95)</a></li>
+    <li><a href="">Network Read</a></li>
+    <li><a href="">Network Write</a></li>
+    <li><a href="">Peak Threads</a></li>
+    <li><a href="">Max Content Switch Rate</a></li>
+    <li><a href="">Total Test Run Duration</a></li>
+</ul>
+<div class="container">
+    <div class="row">
+        <div class="col m10 offset-m2">
+            <h3>OpenTelemetry Java Agent Overhead</h3>
+
+            <a id="a-startup"></a>
+            <h4>Startup Time (s)</h4>
+            <div id="startup"></div>
+
+            <a id="a-avgcpu"></a>
+            <h4>Average CPU (% user)</h4>
+            <div id="avgcpu"></div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    startOverhead();
+</script>
+</body>
+</html>
