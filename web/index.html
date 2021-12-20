@@ -17,22 +17,22 @@
 </head>
 <body>
 <ul class="sidenav sidenav-fixed">
-    <li><a href="#a-startup">Startup</a></li>
+    <li><a href="#a-startup">Startup Time</a></li>
     <li><a href="#a-avgcpu">Average CPU (user)</a></li>
     <li><a href="#a-maxcpu">Max CPU (user)</a></li>
     <li><a href="#a-maxheap">Max Heap</a></li>
     <li><a href="#a-totalallocated">Total Allocated</a></li>
     <li><a href="#a-totalgctime">Total GC Time</a></li>
     <li><a href="#a-totalgcpausetime">Total GC Pause Time</a></li>
-    <li><a href="#">Script duration</a></li>
-    <li><a href="#">Script Duration</a></li>
-    <li><a href="#">Request Latency</a></li>
-    <li><a href="#">Request Latency (p95)</a></li>
-    <li><a href="#">Network Read</a></li>
-    <li><a href="#">Network Write</a></li>
-    <li><a href="#">Peak Threads</a></li>
-    <li><a href="#">Max Content Switch Rate</a></li>
-    <li><a href="#">Total Test Run Duration</a></li>
+    <li><a href="#a-scriptduration">Script Duration</a></li>
+    <li><a href="#a-scriptdurationp95">Script Duration (P95)</a></li>
+    <li><a href="#a-requestavg">Request Latency</a></li>
+    <li><a href="#a-requestavgp95">Request Latency (p95)</a></li>
+    <li><a href="#a-netreadavg">Network Read</a></li>
+    <li><a href="#a-netwriteavg">Network Write</a></li>
+    <li><a href="#a-peakthreads">Peak Threads</a></li>
+    <li><a href="#a-threadswitchrate">Max Content Switch Rate</a></li>
+    <li><a href="#a-runduration">Total Test Run Duration</a></li>
 </ul>
 <div class="container">
     <div class="row">
@@ -66,6 +66,42 @@
             <a id="a-totalgcpausetime"></a>
             <h4>Total GC Pause Time (ms)</h4>
             <div id="gcPauseMs-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-scriptduration"></a>
+            <h4>Test Script Duration (ms)</h4>
+            <div id="iterationAvg-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-scriptdurationp95"></a>
+            <h4>Test Script Duration P95 (ms)</h4>
+            <div id="iterationP95-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-requestavg"></a>
+            <h4>Individual Request Latency (ms)</h4>
+            <div id="requestAvg-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-requestavgp95"></a>
+            <h4>Individual Request Latency (ms)</h4>
+            <div id="requestP95-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-netreadavg"></a>
+            <h4>Average Network Read Rate (MiB/s)</h4>
+            <div id="netReadAvg-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-netwriteavg"></a>
+            <h4>Average Network Write Rate (MiB/s)</h4>
+            <div id="netWriteAvg-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-peakthreads"></a>
+            <h4>Pead Number of Active Threads</h4>
+            <div id="peakThreadCount-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-threadswitchrate"></a>
+            <h4>Thread Context Switch Rate (max/s)</h4>
+            <div id="maxThreadContextSwitchRate-chart" class="ct-chart ct-perfect-fourth"></div>
+
+            <a id="a-runduration"></a>
+            <h4>Run Duration (s)</h4>
+            <div id="runDurationMs-chart" class="ct-chart ct-perfect-fourth"></div>
 
 
         </div>
