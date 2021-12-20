@@ -117,12 +117,12 @@ The results are saved to a CSV file and the final run is summarized in a txt fil
 ## Configuration
 
 `externals` instance: 
-* m4.xlarge
+* m4.large
 * 2 vCPU
 * 8 GiB memory
 
 `testbox` instance: 
-* m4.large
+* m4.xlarge
 * 4 vCPU
 * 16 GiB memory
 
