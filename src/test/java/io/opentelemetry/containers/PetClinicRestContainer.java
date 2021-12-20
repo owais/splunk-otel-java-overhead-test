@@ -73,6 +73,7 @@ public class PetClinicRestContainer {
             .withEnv("spring_datasource_url", "jdbc:postgresql://" + postgresHost + ":5432/" + PostgresContainer.DATABASE_NAME)
             .withEnv("spring_datasource_username", PostgresContainer.USERNAME)
             .withEnv("spring_datasource_password", PostgresContainer.PASSWORD)
+            .withEnv("spring.datasource.hikari.maximum-pool-size", "30")
             .withEnv("spring_jpa_hibernate_ddl-auto", "none")
             .withCommand(buildCommandline(agentJar));
 
