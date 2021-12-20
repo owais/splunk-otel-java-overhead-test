@@ -162,14 +162,15 @@ public class OverheadWithExternalsTests {
     String[] startCommand = {"jcmd", "1", "JFR.start", "settings=/app/overhead.jfc", "dumponexit=true", "name=warmup", "filename=warmup.jfr"};
     petclinic.execInContainer(startCommand);
 
-    long start = System.currentTimeMillis();
-    while(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start) < testConfig.getWarmupSeconds()){
+    long deadline =
+        System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(testConfig.getWarmupSeconds());
+    while(System.currentTimeMillis() < deadline){
       GenericContainer<?> k6 = new GenericContainer<>(
           DockerImageName.parse("loadimpact/k6"))
           .withNetwork(NETWORK)
           .withCopyFileToContainer(
               MountableFile.forHostPath("./k6"), "/app")
-          .withCommand("run", "-u", "5", "-i", "25", "/app/basic.js")
+          .withCommand("run", "-u", "5", "-i", "200", "/app/basic.js")
           .withStartupCheckStrategy(new OneShotStartupCheckStrategy());
       k6.start();
     }
