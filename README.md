@@ -29,7 +29,7 @@ Environmental factors also include virtualization and containerization, and the 
 of configurations thereof. Other aspects of overhead include the choice of operating system and 
 its libraries, the JVM version (and vendor), and the algorithmic design of the software being 
 monitored, and the dependency graph of all software libraries. Furthermore, the JVM runtime
-arguments like memory settings and garbage collector type can have a major impact on agent
+configuration like memory settings and garbage collector type can have a major impact on agent
 overhead.
 
 Your results will be different from the results contained here, but they are expected to
