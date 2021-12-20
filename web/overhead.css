@@ -2,3 +2,19 @@ body {
     padding: 0;
     margin: 0;
 }
+
+.ct-bar {
+    stroke-width: 100px;
+}
+
+.ct-series-a .ct-bar {
+    stroke: #444444;
+}
+
+.ct-label {
+    color: black;
+}
+
+.ct-bar-label {
+    text-color: black;
+}

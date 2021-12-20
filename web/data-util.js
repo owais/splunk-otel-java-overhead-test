@@ -1,4 +1,5 @@
 /**
+ * The parsed format is like this:
  * {
  *   agents: [a1, a2, a3],
  *   runs: [
@@ -20,7 +21,7 @@
  */
 function parseCsv(body) {
     const runs = parseRuns(body);
-    const agents = body.split('\n')[0].split(',').slice(1).map(x => x.replace(/:.*/, '')).slice(0,3);
+    const agents = body.split('\n')[0].split(',').slice(1).map(x => x.replace(/:.*/, '')).slice(0, 3);
     console.log(agents);
     return {
         agents: agents,
@@ -28,7 +29,7 @@ function parseCsv(body) {
     }
 }
 
-function parseRuns(body){
+function parseRuns(body) {
     const lines = body.trim().split("\n");
     const fieldNames = lines.shift().split(",");
 
@@ -49,7 +50,49 @@ function parseRuns(body){
             acc[agent] = obj;
             return acc;
         }, {});
-        obj['timestamp'] = new Date(Number(timestamp)*1000);
+        obj['timestamp'] = new Date(Number(timestamp) * 1000);
         return obj;
     });
+}
+
+/*
+Takes the run data structured like the above and returns an aggregation like this:
+{
+    agents: [a1, a2, a3],
+    results: {
+        startupDurationMs: {
+          a1: 123,
+          a2: 334,
+          a3: 234
+        },
+        totalAllocatedMB: {
+          a1: 33838,
+          a2: 230984,
+          a3: 3893
+        }
+        ...
+    }
+}
+ */
+function aggregateRunData(data) {
+    const firstRun = data['runs'][0];
+    const firstAgentRun = Object.entries(firstRun)[0];
+    const fields = Object.keys(firstAgentRun[1]);
+    console.log(fields)
+    const res = fields.map(field => {
+        const results = aggregateSingleResult(data, field);
+        return [field, results];
+    });
+    return {
+        agents: data['agents'],
+        results: Object.fromEntries(res)
+    };
+}
+
+function aggregateSingleResult(data, field) {
+    const agentWithAverage = data.agents.map(agent => {
+        const value = data.runs.reduce((acc,run) => acc + run[agent][field], 0);
+        return [agent, value/data.runs.length];
+    });
+    return Object.fromEntries(agentWithAverage);
 }

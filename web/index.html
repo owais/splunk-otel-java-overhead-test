@@ -5,8 +5,12 @@
     <meta name=”viewport” content=”width=device-width, initial-scale=1.0">
     <title>OpenTelemetry Java Agent Overhead</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="overhead.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"/>
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/chartist-plugin-axistitle@0.0.7/dist/chartist-plugin-axistitle.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/chartist-plugin-barlabels@0.0.5/dist/chartist-plugin-barlabels.min.js"></script>
+    <link rel="stylesheet" href="overhead.css">
     <script src="data-client.js"></script>
     <script src="data-util.js"></script>
     <script src="overhead.js"></script>
@@ -37,11 +41,11 @@
 
             <a id="a-startup"></a>
             <h4>Startup Time (s)</h4>
-            <div id="startup"></div>
+            <div id="startupDurationMs-chart" class="ct-chart ct-perfect-fourth"></div>
 
             <a id="a-avgcpu"></a>
             <h4>Average CPU (% user)</h4>
-            <div id="avgcpu"></div>
+            <div id="averageCpuUser-chart" class="ct-chart ct-perfect-fourth"></div>
 
 
         </div>

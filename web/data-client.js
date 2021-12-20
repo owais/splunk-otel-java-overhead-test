@@ -5,10 +5,13 @@ async function getRuns(){
 }
 
 async function getResults(name){
-    fetch(`results/${name}/results.csv`)
+    return fetch(`results/${name}/results.csv`)
         .then(resp => resp.text())
         .then(body => parseCsv(body))
         .then(data => {
-            console.log(data);
+            // console.log(data);
+            const aggregated = aggregateRunData(data);
+            console.log(aggregated)
+            return aggregated;
         });
 }
