@@ -7,6 +7,11 @@ async function startOverhead(){
 function addCharts(aggregated){
     makeChart(aggregated, 'startupDurationMs', "seconds", x => x / 1000);
     makeChart(aggregated, 'averageCpuUser', "percent (%)");
+    makeChart(aggregated, 'maxCpuUser', "percent (%)");
+    makeChart(aggregated, 'maxHeapUsed', "megabytes", x => x / (1024*1024));
+    makeChart(aggregated, 'totalAllocatedMB', "gigabytes", x => x / (1024));
+    makeChart(aggregated, 'totalGCTime', "seconds", x => x / (1000*1000*1000));
+    makeChart(aggregated, 'gcPauseMs', "milliseconds");
 }
 
 function makeChart(aggregated, resultType, axisTitle, scaleFunction = x => x) {
