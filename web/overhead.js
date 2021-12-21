@@ -37,7 +37,7 @@ function makeChart(aggregated, resultType, axisTitle, scaleFunction = x => x) {
                 offset: 60
             },
             axisY: {
-                offset: 50,
+                offset: 60,
                 scaleMinSpace: 20
             },
             plugins: [
