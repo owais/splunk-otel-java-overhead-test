@@ -146,7 +146,29 @@ TBD
 
 # Performing your own tests
 
-YMMV. This will eventually contain guidance.
+We welcome users of the Splunk distribution of OpenTelemetry Java Instrumentation to
+repeat these experiments and to conduct comparable tests with their own services.
+
+Given the complexity in conducting such experiments in cloud-based environments, we
+offer up the following guidance:
+
+* To the extent that it is possible, isolate the application under test from other services. This 
+  helps to reduce interference and keeps the test results more consistent and easier to reason about.
+* Turn off or remove all unnecessary system services on the application host.
+* Use a warm-up phase prior to starting measurements. The JVM is a highly dynamic machine that performs
+  a large number of optimizations via just-in-time compilation (JIT). The warm-up phase helps the 
+  application to finish most of its class loading and gives the JIT compiler time to perform the 
+  majority of optimizations. During the warm-up phase, the test runner should provide a standard/typical 
+  workload to the application.
+* During the tests, ensure that the application is not resource constrained. It should have 
+  enough memory, CPU, and network available to handle the test workload.
+* Be sure to run a large number of requests and to repeat the test pass many times. This helps
+  to ensure a representative data sample.
+* Include error scenarios in your test data. The error rate should be similar to a normal workload,
+  typically in a rate of 2% to 10%.
+* Keep in mind that your results are likely to differ. Every stack, every application, and every
+  environment will have different operational characteristics and thus different overhead
+  measurement results.
 
 # License
 
