@@ -76,6 +76,7 @@ We distill these down into these categories of measurement:
 * Service latency
   * single REST call (avg, p95)
   * test script (avg, p95)
+  * throughput (RPS computed from avg latency)
 * Network
   * read throughput (avg)
   * write throughput (avg)

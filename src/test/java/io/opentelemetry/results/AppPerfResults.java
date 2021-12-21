@@ -56,6 +56,11 @@ public class AppPerfResults {
     return totalAllocated / (1024.0 * 1024.0);
   }
 
+  double getComputedAvgThroughputInRPS(){
+    double requestAvgInSeconds = requestAvg / 1000.0; // ms -> s
+    return (1.0d / requestAvgInSeconds) * config.getConcurrentConnections();
+  }
+
   String getAgentName() {
     return agent.getName();
   }
