@@ -1,7 +1,8 @@
 
 // Returns a list of available historic runs
 async function getRuns(){
-    //tbd
+    //TODO: Fetch from a static file
+    return Promise.resolve(['20211214_203544']);
 }
 
 async function getResults(name){

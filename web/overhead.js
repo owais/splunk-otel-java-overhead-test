@@ -1,23 +1,48 @@
-async function startOverhead(){
+async function startOverhead() {
     console.log('overhead started');
-    getResults('20211214_203544')
+    document.getElementById('test-run')
+        .addEventListener("change", testRunChosen);
+    getRuns()
+        .then(runNames => {
+            console.log(runNames);
+            populateRunsDropDown(runNames);
+            document.getElementById('test-run').value = runNames[0];
+            testRunChosen(runNames[0]);
+        });
+}
+
+function testRunChosen() {
+    //TODO: Consider clearing/removing existing graphs first
+    const value = document.getElementById('test-run').value;
+    console.log(`selection changed ${value}`);
+    getResults(value)
         .then(addCharts)
 }
 
-function addCharts(aggregated){
+function populateRunsDropDown(runNames) {
+    const sel = document.getElementById('test-run');
+    runNames.forEach(name => {
+        const option = document.createElement("option");
+        option.text = name;
+        option.value = name;
+        sel.add(option);
+    });
+}
+
+function addCharts(aggregated) {
     makeChart(aggregated, 'startupDurationMs', "seconds", x => x / 1000);
     makeChart(aggregated, 'averageCpuUser', "percent (%)");
     makeChart(aggregated, 'maxCpuUser', "percent (%)");
-    makeChart(aggregated, 'maxHeapUsed', "megabytes", x => x / (1024*1024));
+    makeChart(aggregated, 'maxHeapUsed', "megabytes", x => x / (1024 * 1024));
     makeChart(aggregated, 'totalAllocatedMB', "gigabytes", x => x / (1024));
-    makeChart(aggregated, 'totalGCTime', "seconds", x => x / (1000*1000*1000));
+    makeChart(aggregated, 'totalGCTime', "seconds", x => x / (1000 * 1000 * 1000));
     makeChart(aggregated, 'gcPauseMs', "milliseconds");
     makeChart(aggregated, 'iterationAvg', "milliseconds");
     makeChart(aggregated, 'iterationP95', "milliseconds");
     makeChart(aggregated, 'requestAvg', "milliseconds");
     makeChart(aggregated, 'requestP95', "milliseconds");
-    makeChart(aggregated, 'netReadAvg', "MiB/s", x => x / (1024*1024));
-    makeChart(aggregated, 'netWriteAvg', "MiB/s", x => x / (1024*1024));
+    makeChart(aggregated, 'netReadAvg', "MiB/s", x => x / (1024 * 1024));
+    makeChart(aggregated, 'netWriteAvg', "MiB/s", x => x / (1024 * 1024));
     makeChart(aggregated, 'peakThreadCount', "MiB/s");
     makeChart(aggregated, 'maxThreadContextSwitchRate', "switches/s");
     makeChart(aggregated, 'runDurationMs', "seconds", x => x / 1000);
