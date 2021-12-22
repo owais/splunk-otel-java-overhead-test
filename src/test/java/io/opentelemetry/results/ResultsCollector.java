@@ -86,8 +86,9 @@ public class ResultsCollector {
         .averageNetworkRead(computeAverageNetworkRead(jfrFile))
         .averageNetworkWrite(computeAverageNetworkWrite(jfrFile))
         .averageJvmUserCpu(computeAverageJvmUserCpu(jfrFile))
-        .averageJvmSystemCpu(computeAverageJvmSystemCpu(jfrFile))
         .maxJvmUserCpu(computeMaxJvmUserCpu(jfrFile))
+        .averageJvmSystemCpu(computeAverageJvmSystemCpu(jfrFile))
+        .maxJvmSystemCpu(computeMaxJvmSystemCpu(jfrFile))
         .averageMachineCpuTotal(computeAverageMachineCpuTotal(jfrFile))
         .totalGcPauseNanos(computeTotalGcPauseNanos(jfrFile));
   }
@@ -96,12 +97,16 @@ public class ResultsCollector {
     return JFRUtils.computeAverageFloat(jfrFile, "jdk.CPULoad", "jvmUser");
   }
 
+  private float computeMaxJvmUserCpu(Path jfrFile) throws IOException {
+    return JFRUtils.findMaxFloat(jfrFile, "jdk.CPULoad", "jvmUser");
+  }
+
   private float computeAverageJvmSystemCpu(Path jfrFile) throws IOException {
     return JFRUtils.computeAverageFloat(jfrFile, "jdk.CPULoad", "jvmSystem");
   }
 
-  private float computeMaxJvmUserCpu(Path jfrFile) throws IOException {
-    return JFRUtils.findMaxFloat(jfrFile, "jdk.CPULoad", "jvmUser");
+  private float computeMaxJvmSystemCpu(Path jfrFile) throws IOException {
+    return JFRUtils.findMaxFloat(jfrFile, "jdk.CPULoad", "jvmSystem");
   }
 
   private float computeAverageMachineCpuTotal(Path jfrFile) throws IOException {

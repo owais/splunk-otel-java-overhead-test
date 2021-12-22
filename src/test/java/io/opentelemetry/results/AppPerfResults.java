@@ -26,6 +26,7 @@ public class AppPerfResults {
   final float averageJvmUserCpu;
   final float maxJvmUserCpu;
   final float averageJvmSystemCpu;
+  final float maxJvmSystemCpu;
   final float averageMachineCpuTotal;
   final long runDurationMs;
   final long totalGcPauseNanos;
@@ -49,6 +50,7 @@ public class AppPerfResults {
     this.averageJvmUserCpu = builder.averageJvmUserCpu;
     this.maxJvmUserCpu = builder.maxJvmUserCpu;
     this.averageJvmSystemCpu = builder.averageJvmSystemCpu;
+    this.maxJvmSystemCpu = builder.maxJvmSystemCpu;
     this.averageMachineCpuTotal = builder.averageMachineCpuTotal;
     this.runDurationMs = builder.runDurationMs;
     this.totalGcPauseNanos = builder.totalGcPauseNanos;
@@ -83,6 +85,7 @@ public class AppPerfResults {
     public float averageJvmUserCpu;
     public float maxJvmUserCpu;
     public float averageJvmSystemCpu;
+    public float maxJvmSystemCpu;
     public float averageMachineCpuTotal;
     public long runDurationMs;
     public long totalGcPauseNanos;
@@ -166,13 +169,18 @@ public class AppPerfResults {
       return this;
     }
 
+    Builder maxJvmUserCpu(float maxJvmUserCpu){
+      this.maxJvmUserCpu = maxJvmUserCpu;
+      return this;
+    }
+
     Builder averageJvmSystemCpu(float averageJvmSystemCpu){
       this.averageJvmSystemCpu = averageJvmSystemCpu;
       return this;
     }
 
-    Builder maxJvmUserCpu(float maxJvmUserCpu){
-      this.maxJvmUserCpu = maxJvmUserCpu;
+    Builder maxJvmSystemCpu(float maxJvmSystemCpu){
+      this.maxJvmSystemCpu = maxJvmSystemCpu;
       return this;
     }
 

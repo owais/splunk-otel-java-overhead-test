@@ -37,6 +37,7 @@ class PrintStreamPersister implements ResultsPersister {
     display(results, "Avg. CPU (user)", res -> String.valueOf(res.averageJvmUserCpu));
     display(results, "Max. CPU (user)", res -> String.valueOf(res.maxJvmUserCpu));
     display(results, "Avg. CPU (system)", res -> String.valueOf(res.averageJvmSystemCpu));
+    display(results, "Max. CPU (system)", res -> String.valueOf(res.maxJvmSystemCpu));
     display(results, "Avg. mch tot cpu", res -> String.valueOf(res.averageMachineCpuTotal));
     display(results, "Startup time (ms)", res -> String.valueOf(res.startupDurationMs));
     display(results, "Total allocated MB", res -> format(res.getTotalAllocatedMB()));
