@@ -34,6 +34,8 @@ class CsvPersister implements ResultsPersister {
     FieldSpec.of("peakThreadCount", r -> r.peakThreadCount),
     FieldSpec.of("averageCpuUser", r -> r.averageJvmUserCpu),
     FieldSpec.of("maxCpuUser", r -> r.maxJvmUserCpu),
+    FieldSpec.of("averageCpuSystem", r -> r.averageJvmSystemCpu),
+    FieldSpec.of("maxCpuSystem", r -> r.maxJvmSystemCpu),
     FieldSpec.of("averageMachineCpuTotal", r -> r.averageMachineCpuTotal),
     FieldSpec.of("runDurationMs", r -> r.runDurationMs),
     FieldSpec.of("gcPauseMs", r -> NANOSECONDS.toMillis(r.totalGcPauseNanos))
