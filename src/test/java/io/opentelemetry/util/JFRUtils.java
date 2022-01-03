@@ -7,10 +7,12 @@ package io.opentelemetry.util;
 import io.opentelemetry.results.AppPerfResults.MinMax;
 import jdk.jfr.consumer.RecordedEvent;
 import jdk.jfr.consumer.RecordingFile;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.common.record.Record;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
 public class JFRUtils {
 
@@ -41,6 +43,12 @@ public class JFRUtils {
         AverageSupport::add).average();
   }
 
+  public static long findAveragePredicatedLong(Path jfrFile, String eventName, String valueKey, Predicate<RecordedEvent> filter) throws IOException {
+    return reduce(jfrFile, eventName, valueKey,
+        new AverageSupport(),
+        AverageSupport::add, filter).average();
+  }
+
   public static float computeAverageFloat(Path jfrFile, String eventName, String valueKey) throws IOException {
     return reduce(jfrFile, eventName, valueKey,
         new AverageFloatSupport(),
@@ -49,13 +57,21 @@ public class JFRUtils {
 
   private static <T, V> T reduce(Path jfrFile, String eventName,
       String valueKey, T initial, BiFunction<T,V,T> reducer) throws IOException {
+    return reduce(jfrFile, eventName, valueKey, initial, reducer, x -> true);
+  }
+
+  private static <T, V> T reduce(Path jfrFile, String eventName,
+                                 String valueKey, T initial, BiFunction<T,V,T> reducer,
+                                 Predicate<RecordedEvent> additionalEventFilter) throws IOException {
     RecordingFile recordingFile = new RecordingFile(jfrFile);
     T result = initial;
     while (recordingFile.hasMoreEvents()) {
       RecordedEvent recordedEvent = recordingFile.readEvent();
       if (eventName.equals(recordedEvent.getEventType().getName())) {
-        V value = recordedEvent.getValue(valueKey);
-        result = reducer.apply(result, value);
+        if(additionalEventFilter.test(recordedEvent)) {
+          V value = recordedEvent.getValue(valueKey);
+          result = reducer.apply(result, value);
+        }
       }
     }
     return result;
