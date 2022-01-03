@@ -146,7 +146,7 @@ TBD
 
 # Performing your own tests
 
-We welcome users of the Splunk distribution of OpenTelemetry Java Instrumentation to
+We welcome users of the Splunk Distribution of OpenTelemetry Java Instrumentation to
 repeat these experiments and to conduct comparable tests with their own services.
 
 Given the complexity in conducting such experiments in cloud-based environments, we
