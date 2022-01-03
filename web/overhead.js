@@ -32,7 +32,7 @@ function populateRunsDropDown(runNames) {
 function addCharts(aggregated) {
     makeChart(aggregated, 'startupDurationMs', "seconds", x => x / 1000);
     makeChart(aggregated, 'averageCpuUser', "percent (%)");
-    makeChart(aggregated, 'maxCpuUser', "percent (%)");
+    makeChart(aggregated, 'maxCpuUser', "% CPU load");
     makeChart(aggregated, 'maxHeapUsed', "megabytes", x => x / (1024 * 1024));
     makeChart(aggregated, 'totalAllocatedMB', "Gigabytes", x => x / (1024));
     makeChart(aggregated, 'totalGCTime', "seconds", x => x / (1000 * 1000 * 1000));
