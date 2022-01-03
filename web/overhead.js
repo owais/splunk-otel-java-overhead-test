@@ -33,19 +33,19 @@ function addCharts(aggregated) {
     makeChart(aggregated, 'startupDurationMs', "Seconds", x => x / 1000);
     makeChart(aggregated, 'averageCpuUser', "% CPU load");
     makeChart(aggregated, 'maxCpuUser', "% CPU load");
-    makeChart(aggregated, 'maxHeapUsed', "megabytes", x => x / (1024 * 1024));
+    makeChart(aggregated, 'maxHeapUsed', "Megabytes", x => x / (1024 * 1024));
     makeChart(aggregated, 'totalAllocatedMB', "Gigabytes", x => x / (1024));
-    makeChart(aggregated, 'totalGCTime', "seconds", x => x / (1000 * 1000 * 1000));
-    makeChart(aggregated, 'gcPauseMs', "milliseconds");
-    makeChart(aggregated, 'iterationAvg', "milliseconds");
-    makeChart(aggregated, 'iterationP95', "milliseconds");
-    makeChart(aggregated, 'requestAvg', "milliseconds");
-    makeChart(aggregated, 'requestP95', "milliseconds");
+    makeChart(aggregated, 'totalGCTime', "Seconds", x => x / (1000 * 1000 * 1000));
+    makeChart(aggregated, 'gcPauseMs', "Milliseconds");
+    makeChart(aggregated, 'iterationAvg', "Milliseconds");
+    makeChart(aggregated, 'iterationP95', "Milliseconds");
+    makeChart(aggregated, 'requestAvg', "Milliseconds");
+    makeChart(aggregated, 'requestP95', "Milliseconds");
     makeChart(aggregated, 'netReadAvg', "MiB/s", x => x / (1024 * 1024));
     makeChart(aggregated, 'netWriteAvg', "MiB/s", x => x / (1024 * 1024));
     makeChart(aggregated, 'peakThreadCount', "MiB/s");
-    makeChart(aggregated, 'maxThreadContextSwitchRate', "switches/s");
-    makeChart(aggregated, 'runDurationMs', "seconds", x => x / 1000);
+    makeChart(aggregated, 'maxThreadContextSwitchRate', "Switches per second");
+    makeChart(aggregated, 'runDurationMs', "Seconds", x => x / 1000);
 }
 
 function makeChart(aggregated, resultType, axisTitle, scaleFunction = x => x) {
