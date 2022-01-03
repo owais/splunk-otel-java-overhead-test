@@ -1,3 +1,10 @@
+
+const MARKETING_NAMES = {
+    'none': 'Not instrumented',
+    'splunk-otel': 'Splunk Java OTel agent',
+    'profiler': 'Splunk Java OTel agent with AlwaysOn Profiling'
+}
+
 async function startOverhead() {
     console.log('overhead started');
     document.getElementById('test-run')
@@ -48,12 +55,17 @@ function addCharts(aggregated) {
     makeChart(aggregated, 'runDurationMs', "Seconds", x => x / 1000);
 }
 
+function makeMarketingNames(agents) {
+    return agents.map(a => MARKETING_NAMES[a] || a);
+}
+
 function makeChart(aggregated, resultType, axisTitle, scaleFunction = x => x) {
-    const agents = aggregated['agents']
+    const agents = aggregated['agents'];
+    const marketingNames = makeMarketingNames(agents);
     const initialResults = agents.map(agent => aggregated['results'][resultType][agent]);
     const results = initialResults.map(scaleFunction);
     new Chartist.Bar(`#${resultType}-chart`, {
-            labels: agents,
+            labels: marketingNames,
             series: [results]
         },
         {
