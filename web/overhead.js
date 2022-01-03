@@ -34,7 +34,7 @@ function addCharts(aggregated) {
     makeChart(aggregated, 'averageCpuUser', "percent (%)");
     makeChart(aggregated, 'maxCpuUser', "percent (%)");
     makeChart(aggregated, 'maxHeapUsed', "megabytes", x => x / (1024 * 1024));
-    makeChart(aggregated, 'totalAllocatedMB', "gigabytes", x => x / (1024));
+    makeChart(aggregated, 'totalAllocatedMB', "Gigabytes", x => x / (1024));
     makeChart(aggregated, 'totalGCTime', "seconds", x => x / (1000 * 1000 * 1000));
     makeChart(aggregated, 'gcPauseMs', "milliseconds");
     makeChart(aggregated, 'iterationAvg', "milliseconds");
