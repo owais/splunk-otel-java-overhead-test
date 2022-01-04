@@ -67,11 +67,13 @@ public class ResultsCollector {
     double iterationP95 = JsonPath.read(json, "$.metrics.iteration_duration['p(95)']");
     double requestAvg = JsonPath.read(json, "$.metrics.http_req_duration.avg");
     double requestP95 = JsonPath.read(json, "$.metrics.http_req_duration['p(95)']");
+    double throughputRequestsPerSecond = JsonPath.read(json, "$.metrics.http_reqs['rate']");
     return builder
         .iterationAvg(iterationAvg)
         .iterationP95(iterationP95)
         .requestAvg(requestAvg)
-        .requestP95(requestP95);
+        .requestP95(requestP95)
+        .throughputRequestsPerSecond(throughputRequestsPerSecond);
   }
 
   private AppPerfResults.Builder addJfrResults(

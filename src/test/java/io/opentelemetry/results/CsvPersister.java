@@ -37,7 +37,7 @@ class CsvPersister implements ResultsPersister {
     FieldSpec.of("averageMachineCpuTotal", r -> r.averageMachineCpuTotal),
     FieldSpec.of("runDurationMs", r -> r.runDurationMs),
     FieldSpec.of("gcPauseMs", r -> NANOSECONDS.toMillis(r.totalGcPauseNanos)),
-    FieldSpec.of("throughputAvg", r -> r.getComputedAvgThroughputInRPS())
+    FieldSpec.of("throughputAvg", r -> r.throughputRequestsPerSecond)
   );
 
   private final Path resultsFile;
