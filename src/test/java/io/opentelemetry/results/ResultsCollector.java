@@ -8,7 +8,7 @@ import com.jayway.jsonpath.JsonPath;
 import io.opentelemetry.agents.Agent;
 import io.opentelemetry.config.TestConfig;
 import io.opentelemetry.results.AppPerfResults.MinMax;
-import io.opentelemetry.util.JFRUtils;
+import io.opentelemetry.util.JfrFileComputations;
 import io.opentelemetry.util.NamingConvention;
 import jdk.jfr.consumer.RecordedEvent;
 
@@ -83,73 +83,21 @@ public class ResultsCollector {
   private AppPerfResults.Builder addJfrResults(
       AppPerfResults.Builder builder, Agent agent) throws IOException {
     Path jfrFile = namingConvention.jfrFile(agent);
+    JfrFileComputations compute = new JfrFileComputations(jfrFile);
     return builder
-        .totalGCTime(readTotalGCTime(jfrFile))
-        .totalAllocated(readTotalAllocated(jfrFile))
-        .heapUsed(readHeapUsed(jfrFile))
-        .maxThreadContextSwitchRate(readMaxThreadContextSwitchRate(jfrFile))
-        .peakThreadCount(readPeakThreadCount(jfrFile))
-        .averageNetworkRead(computeAverageNetworkRead(jfrFile))
-        .averageNetworkWrite(computeAverageNetworkWrite(jfrFile))
-        .averageJvmUserCpu(computeAverageJvmUserCpu(jfrFile))
-        .maxJvmUserCpu(computeMaxJvmUserCpu(jfrFile))
-        .averageJvmSystemCpu(computeAverageJvmSystemCpu(jfrFile))
-        .maxJvmSystemCpu(computeMaxJvmSystemCpu(jfrFile))
-        .averageMachineCpuTotal(computeAverageMachineCpuTotal(jfrFile))
-        .totalGcPauseNanos(computeTotalGcPauseNanos(jfrFile));
-  }
-
-  private float computeAverageJvmUserCpu(Path jfrFile) throws IOException {
-    return JFRUtils.computeAverageFloat(jfrFile, "jdk.CPULoad", "jvmUser");
-  }
-
-  private float computeMaxJvmUserCpu(Path jfrFile) throws IOException {
-    return JFRUtils.findMaxFloat(jfrFile, "jdk.CPULoad", "jvmUser");
-  }
-
-  private float computeAverageJvmSystemCpu(Path jfrFile) throws IOException {
-    return JFRUtils.computeAverageFloat(jfrFile, "jdk.CPULoad", "jvmSystem");
-  }
-
-  private float computeMaxJvmSystemCpu(Path jfrFile) throws IOException {
-    return JFRUtils.findMaxFloat(jfrFile, "jdk.CPULoad", "jvmSystem");
-  }
-
-  private float computeAverageMachineCpuTotal(Path jfrFile) throws IOException {
-    return JFRUtils.computeAverageFloat(jfrFile, "jdk.CPULoad", "machineTotal");
-  }
-
-  private long computeAverageNetworkRead(Path jfrFile) throws IOException {
-    return JFRUtils.findAveragePredicatedLong(jfrFile, "jdk.NetworkUtilization", "readRate", EXCLUDE_LOCALHOST);
-  }
-
-  private long computeAverageNetworkWrite(Path jfrFile) throws IOException {
-    return JFRUtils.findAveragePredicatedLong(jfrFile, "jdk.NetworkUtilization", "writeRate", EXCLUDE_LOCALHOST);
-  }
-
-  private long computeTotalGcPauseNanos(Path jfrFile) throws IOException {
-    return JFRUtils.sumLongEventValues(jfrFile, "jdk.GCPhasePause", "duration");
-  }
-
-  private long readPeakThreadCount(Path jfrFile) throws IOException {
-    MinMax minMax = JFRUtils.findMinMax(jfrFile, "jdk.JavaThreadStatistics", "peakCount");
-    return minMax.max;
-  }
-
-  private long readTotalGCTime(Path jfrFile) throws IOException {
-    return JFRUtils.sumLongEventValues(jfrFile, "jdk.G1GarbageCollection", "duration");
-  }
-
-  private long readTotalAllocated(Path jfrFile) throws IOException {
-    return JFRUtils.sumLongEventValues(jfrFile, "jdk.ThreadAllocationStatistics", "allocated");
-  }
-
-  private MinMax readHeapUsed(Path jfrFile) throws IOException {
-    return JFRUtils.findMinMax(jfrFile, "jdk.GCHeapSummary", "heapUsed");
-  }
-
-  private float readMaxThreadContextSwitchRate(Path jfrFile) throws IOException {
-    return JFRUtils.findMaxFloat(jfrFile, "jdk.ThreadContextSwitchRate", "switchRate");
+        .totalGCTime(compute.readTotalGCTime(jfrFile))
+        .totalAllocated(compute.readTotalAllocated(jfrFile))
+        .heapUsed(compute.readHeapUsed(jfrFile))
+        .maxThreadContextSwitchRate(compute.readMaxThreadContextSwitchRate(jfrFile))
+        .peakThreadCount(compute.readPeakThreadCount(jfrFile))
+        .averageNetworkRead(compute.computeAverageNetworkRead(jfrFile))
+        .averageNetworkWrite(compute.computeAverageNetworkWrite(jfrFile))
+        .averageJvmUserCpu(compute.computeAverageJvmUserCpu(jfrFile))
+        .maxJvmUserCpu(compute.computeMaxJvmUserCpu(jfrFile))
+        .averageJvmSystemCpu(compute.computeAverageJvmSystemCpu(jfrFile))
+        .maxJvmSystemCpu(compute.computeMaxJvmSystemCpu(jfrFile))
+        .averageMachineCpuTotal(compute.computeAverageMachineCpuTotal(jfrFile))
+        .totalGcPauseNanos(compute.computeTotalGcPauseNanos(jfrFile));
   }
 
 }
