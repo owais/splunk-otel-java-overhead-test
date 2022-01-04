@@ -5,11 +5,18 @@
 package io.opentelemetry.util;
 
 import io.opentelemetry.results.AppPerfResults.MinMax;
+import jdk.jfr.consumer.RecordedEvent;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.function.Predicate;
 
 public class JfrFileComputations {
+
+    private final static Predicate<RecordedEvent> EXCLUDE_LOCALHOST = event -> {
+        String networkInterface = event.getValue("networkInterface");
+        return !networkInterface.startsWith("lo");
+    };
 
     private final JfrFileReduceOps reduceOps;
 
@@ -22,15 +29,15 @@ public class JfrFileComputations {
     }
 
     public float computeAverageJvmUserCpu(Path jfrFile) throws IOException {
-        return reduceOps.computeAverageFloat( "jdk.CPULoad", "jvmUser");
+        return reduceOps.computeAverageFloat("jdk.CPULoad", "jvmUser");
     }
 
     public float computeMaxJvmUserCpu(Path jfrFile) throws IOException {
-        return reduceOps.findMaxFloat( "jdk.CPULoad", "jvmUser");
+        return reduceOps.findMaxFloat("jdk.CPULoad", "jvmUser");
     }
 
     public float computeAverageJvmSystemCpu(Path jfrFile) throws IOException {
-        return reduceOps.computeAverageFloat( "jdk.CPULoad", "jvmSystem");
+        return reduceOps.computeAverageFloat("jdk.CPULoad", "jvmSystem");
     }
 
     public float computeMaxJvmSystemCpu(Path jfrFile) throws IOException {
@@ -42,12 +49,11 @@ public class JfrFileComputations {
     }
 
     public long computeAverageNetworkRead(Path jfrFile) throws IOException {
-        return reduceOps.findAverageLong("jdk.NetworkUtilization", "readRate");
-
+        return reduceOps.findAverageLong("jdk.NetworkUtilization", "readRate", EXCLUDE_LOCALHOST);
     }
 
     public long computeAverageNetworkWrite(Path jfrFile) throws IOException {
-        return reduceOps.findAverageLong("jdk.NetworkUtilization", "writeRate");
+        return reduceOps.findAverageLong("jdk.NetworkUtilization", "writeRate", EXCLUDE_LOCALHOST);
     }
 
     public long computeTotalGcPauseNanos(Path jfrFile) throws IOException {

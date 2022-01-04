@@ -1,9 +1,11 @@
 package io.opentelemetry.util;
 
 import io.opentelemetry.results.AppPerfResults;
+import jdk.jfr.consumer.RecordedEvent;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.function.Predicate;
 
 public class JfrFileReduceOps {
 
@@ -49,9 +51,14 @@ public class JfrFileReduceOps {
     }
 
     public long findAverageLong(String eventName, String valueKey) throws IOException {
+        return findAverageLong(eventName, valueKey, x -> true);
+    }
+
+    public long findAverageLong(String eventName, String valueKey, Predicate<RecordedEvent> predicate) throws IOException {
         return Averager.forFile(jfrFile)
                 .forEventsNamed(eventName)
                 .usingValueFrom(valueKey)
+                .predicatedBy(predicate)
                 .computeLong();
     }
 

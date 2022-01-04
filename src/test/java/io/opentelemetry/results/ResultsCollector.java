@@ -7,25 +7,18 @@ package io.opentelemetry.results;
 import com.jayway.jsonpath.JsonPath;
 import io.opentelemetry.agents.Agent;
 import io.opentelemetry.config.TestConfig;
-import io.opentelemetry.results.AppPerfResults.MinMax;
 import io.opentelemetry.util.JfrFileComputations;
 import io.opentelemetry.util.NamingConvention;
-import jdk.jfr.consumer.RecordedEvent;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ResultsCollector {
 
-  private final static Predicate<RecordedEvent> EXCLUDE_LOCALHOST = event -> {
-    String networkInterface = event.getValue("networkInterface");
-    return !networkInterface.startsWith("lo");
-  };
   private final NamingConvention namingConvention;
   private final Map<String, Long> runDurations;
 
