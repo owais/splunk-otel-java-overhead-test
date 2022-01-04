@@ -7,7 +7,6 @@ package io.opentelemetry.util;
 import io.opentelemetry.results.AppPerfResults.MinMax;
 import jdk.jfr.consumer.RecordedEvent;
 import jdk.jfr.consumer.RecordingFile;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.record.Record;
 
 import java.io.IOException;
 import java.nio.file.Path;
