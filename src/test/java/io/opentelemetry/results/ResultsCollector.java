@@ -78,19 +78,19 @@ public class ResultsCollector {
     Path jfrFile = namingConvention.jfrFile(agent);
     JfrFileComputations compute = new JfrFileComputations(jfrFile);
     return builder
-        .totalGCTime(compute.readTotalGCTime(jfrFile))
-        .totalAllocated(compute.readTotalAllocated(jfrFile))
-        .heapUsed(compute.readHeapUsed(jfrFile))
-        .maxThreadContextSwitchRate(compute.readMaxThreadContextSwitchRate(jfrFile))
-        .peakThreadCount(compute.readPeakThreadCount(jfrFile))
-        .averageNetworkRead(compute.computeAverageNetworkRead(jfrFile))
-        .averageNetworkWrite(compute.computeAverageNetworkWrite(jfrFile))
-        .averageJvmUserCpu(compute.computeAverageJvmUserCpu(jfrFile))
-        .maxJvmUserCpu(compute.computeMaxJvmUserCpu(jfrFile))
-        .averageJvmSystemCpu(compute.computeAverageJvmSystemCpu(jfrFile))
-        .maxJvmSystemCpu(compute.computeMaxJvmSystemCpu(jfrFile))
-        .averageMachineCpuTotal(compute.computeAverageMachineCpuTotal(jfrFile))
-        .totalGcPauseNanos(compute.computeTotalGcPauseNanos(jfrFile));
+        .totalGCTime(compute.readTotalGCTime())
+        .totalAllocated(compute.readTotalAllocated())
+        .heapUsed(compute.readHeapUsed())
+        .maxThreadContextSwitchRate(compute.readMaxThreadContextSwitchRate())
+        .peakThreadCount(compute.readPeakThreadCount())
+        .averageNetworkRead(compute.computeAverageNetworkRead())
+        .averageNetworkWrite(compute.computeAverageNetworkWrite())
+        .averageJvmUserCpu(compute.computeAverageJvmUserCpu())
+        .maxJvmUserCpu(compute.computeMaxJvmUserCpu())
+        .averageJvmSystemCpu(compute.computeAverageJvmSystemCpu())
+        .maxJvmSystemCpu(compute.computeMaxJvmSystemCpu())
+        .averageMachineCpuTotal(compute.computeAverageMachineCpuTotal())
+        .totalGcPauseNanos(compute.computeTotalGcPauseNanos());
   }
 
 }

@@ -28,56 +28,58 @@ public class JfrFileComputations {
         this.reduceOps = reduceOps;
     }
 
-    public float computeAverageJvmUserCpu(Path jfrFile) throws IOException {
+    public float computeAverageJvmUserCpu() throws IOException {
         return reduceOps.computeAverageFloat("jdk.CPULoad", "jvmUser");
     }
 
-    public float computeMaxJvmUserCpu(Path jfrFile) throws IOException {
+    public float computeMaxJvmUserCpu() throws IOException {
         return reduceOps.findMaxFloat("jdk.CPULoad", "jvmUser");
     }
 
-    public float computeAverageJvmSystemCpu(Path jfrFile) throws IOException {
+    public float computeAverageJvmSystemCpu() throws IOException {
         return reduceOps.computeAverageFloat("jdk.CPULoad", "jvmSystem");
     }
 
-    public float computeMaxJvmSystemCpu(Path jfrFile) throws IOException {
+    public float computeMaxJvmSystemCpu() throws IOException {
         return reduceOps.findMaxFloat("jdk.CPULoad", "jvmSystem");
     }
 
-    public float computeAverageMachineCpuTotal(Path jfrFile) throws IOException {
+    public float computeAverageMachineCpuTotal(
+
+    ) throws IOException {
         return reduceOps.computeAverageFloat("jdk.CPULoad", "machineTotal");
     }
 
-    public long computeAverageNetworkRead(Path jfrFile) throws IOException {
+    public long computeAverageNetworkRead() throws IOException {
         return reduceOps.findAverageLong("jdk.NetworkUtilization", "readRate", EXCLUDE_LOCALHOST);
     }
 
-    public long computeAverageNetworkWrite(Path jfrFile) throws IOException {
+    public long computeAverageNetworkWrite() throws IOException {
         return reduceOps.findAverageLong("jdk.NetworkUtilization", "writeRate", EXCLUDE_LOCALHOST);
     }
 
-    public long computeTotalGcPauseNanos(Path jfrFile) throws IOException {
+    public long computeTotalGcPauseNanos() throws IOException {
         return reduceOps.sumLongEventValues("jdk.GCPhasePause", "duration");
     }
 
-    public long readPeakThreadCount(Path jfrFile) throws IOException {
+    public long readPeakThreadCount() throws IOException {
         MinMax minMax = reduceOps.findMinMax("jdk.JavaThreadStatistics", "peakCount");
         return minMax.max;
     }
 
-    public long readTotalGCTime(Path jfrFile) throws IOException {
+    public long readTotalGCTime() throws IOException {
         return reduceOps.sumLongEventValues("jdk.G1GarbageCollection", "duration");
     }
 
-    public long readTotalAllocated(Path jfrFile) throws IOException {
+    public long readTotalAllocated() throws IOException {
         return reduceOps.sumLongEventValues("jdk.ThreadAllocationStatistics", "allocated");
     }
 
-    public MinMax readHeapUsed(Path jfrFile) throws IOException {
+    public MinMax readHeapUsed() throws IOException {
         return reduceOps.findMinMax("jdk.GCHeapSummary", "heapUsed");
     }
 
-    public float readMaxThreadContextSwitchRate(Path jfrFile) throws IOException {
+    public float readMaxThreadContextSwitchRate() throws IOException {
         return reduceOps.findMaxFloat("jdk.ThreadContextSwitchRate", "switchRate");
     }
 
