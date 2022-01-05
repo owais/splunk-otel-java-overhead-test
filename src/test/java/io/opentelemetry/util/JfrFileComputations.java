@@ -44,9 +44,7 @@ public class JfrFileComputations {
         return reduceOps.findMaxFloat("jdk.CPULoad", "jvmSystem");
     }
 
-    public float computeAverageMachineCpuTotal(
-
-    ) throws IOException {
+    public float computeAverageMachineCpuTotal() throws IOException {
         return reduceOps.computeAverageFloat("jdk.CPULoad", "machineTotal");
     }
 
