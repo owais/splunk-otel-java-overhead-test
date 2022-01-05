@@ -15,9 +15,21 @@ class Reducer<T, V> {
     private final Path jfrFile;
     private String eventName;
     private String valueKey;
-    private Predicate<RecordedEvent> predicate;
+    private Predicate<RecordedEvent> predicate = x -> true;
     private T initialValue;
     private BiFunction<T, V, T> reducer;
+
+    public static Reducer<AverageSupport.Long, Long> newLongAverager(Path jfrFile){
+        return Reducer.<AverageSupport.Long, Long>forFile(jfrFile)
+                .withInitialValue(AverageSupport.Long.EMPTY)
+                .reducedBy(AverageSupport.Long::add);
+    }
+
+    public static Reducer<AverageSupport.Float, Long> newFloatAverager(Path jfrFile){
+        return Reducer.<AverageSupport.Float, Long>forFile(jfrFile)
+                .withInitialValue(AverageSupport.Float.EMPTY)
+                .reducedBy(AverageSupport.Float::add);
+    }
 
     private Reducer(Path jfrFile) {
         this.jfrFile = jfrFile;

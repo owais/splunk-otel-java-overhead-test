@@ -50,23 +50,25 @@ public class JfrFileReduceOps {
                 .reduce();
     }
 
-    public long findAverageLong(String eventName, String valueKey) throws IOException {
-        return findAverageLong(eventName, valueKey, x -> true);
+    public long computeAverageLong(String eventName, String valueKey) throws IOException {
+        return computeAverageLong(eventName, valueKey, x -> true);
     }
 
-    public long findAverageLong(String eventName, String valueKey, Predicate<RecordedEvent> predicate) throws IOException {
-        return Averager.forFile(jfrFile)
+    public long computeAverageLong(String eventName, String valueKey, Predicate<RecordedEvent> predicate) throws IOException {
+        return Reducer.newLongAverager(jfrFile)
                 .forEventsNamed(eventName)
                 .usingValueFrom(valueKey)
                 .predicatedBy(predicate)
-                .computeLong();
+                .reduce()
+                .average();
     }
 
     public float computeAverageFloat(String eventName, String valueKey) throws IOException {
-        return Averager.forFile(jfrFile)
+        return Reducer.newFloatAverager(jfrFile)
                 .forEventsNamed(eventName)
                 .usingValueFrom(valueKey)
-                .computeFloat();
+                .reduce()
+                .average();
     }
 
 

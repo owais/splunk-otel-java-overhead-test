@@ -49,11 +49,11 @@ public class JfrFileComputations {
     }
 
     public long computeAverageNetworkRead() throws IOException {
-        return reduceOps.findAverageLong("jdk.NetworkUtilization", "readRate", EXCLUDE_LOCALHOST);
+        return reduceOps.computeAverageLong("jdk.NetworkUtilization", "readRate", EXCLUDE_LOCALHOST);
     }
 
     public long computeAverageNetworkWrite() throws IOException {
-        return reduceOps.findAverageLong("jdk.NetworkUtilization", "writeRate", EXCLUDE_LOCALHOST);
+        return reduceOps.computeAverageLong("jdk.NetworkUtilization", "writeRate", EXCLUDE_LOCALHOST);
     }
 
     public long computeTotalGcPauseNanos() throws IOException {
