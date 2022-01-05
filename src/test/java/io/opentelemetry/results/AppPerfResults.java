@@ -30,6 +30,7 @@ public class AppPerfResults {
   final float averageMachineCpuTotal;
   final long runDurationMs;
   final long totalGcPauseNanos;
+  final double throughputRequestsPerSecond;
 
 
   private AppPerfResults(Builder builder) {
@@ -54,6 +55,7 @@ public class AppPerfResults {
     this.averageMachineCpuTotal = builder.averageMachineCpuTotal;
     this.runDurationMs = builder.runDurationMs;
     this.totalGcPauseNanos = builder.totalGcPauseNanos;
+    this.throughputRequestsPerSecond = builder.throughputRequestsPerSecond;
   }
 
   double getTotalAllocatedMB() {
@@ -89,6 +91,7 @@ public class AppPerfResults {
     public float averageMachineCpuTotal;
     public long runDurationMs;
     public long totalGcPauseNanos;
+    public double throughputRequestsPerSecond;
 
     AppPerfResults build() {
       return new AppPerfResults(this);
@@ -196,6 +199,11 @@ public class AppPerfResults {
 
     Builder totalGcPauseNanos(long totalGcPauseNanos){
       this.totalGcPauseNanos = totalGcPauseNanos;
+      return this;
+    }
+
+    Builder throughputRequestsPerSecond(double throughputRequestsPerSecond){
+      this.throughputRequestsPerSecond = throughputRequestsPerSecond;
       return this;
     }
   }

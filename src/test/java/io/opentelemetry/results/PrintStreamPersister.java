@@ -54,6 +54,7 @@ class PrintStreamPersister implements ResultsPersister {
     display(results, "Net read avg (bps)", res -> format(res.averageNetworkRead));
     display(results, "Net write avg (bps)", res -> format(res.averageNetworkWrite));
     display(results, "Peak threads", res -> String.valueOf(res.peakThreadCount));
+    display(results, "Throughput (RPS)", res -> format(res.throughputRequestsPerSecond));
   }
 
   private void display(List<AppPerfResults> results, String pref,
