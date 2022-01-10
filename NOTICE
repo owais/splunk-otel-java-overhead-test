@@ -1,0 +1,13 @@
+Splunk OpenTelemetry Java Overhead Tests
+
+Copyright Splunk Inc
+Copyright The OpenTelemetry Authors
+
+================= OpenTelemetry Instrumentation for Java ==================
+
+This product is based on source code originally developed by the
+OpenTelemetry Authors and others under the auspices of the Cloud Native
+Computing Foundation (CNCF) and released as the OpenTelemetry
+Instrumentation for Java.
+
+URL: https://github.com/open-telemetry/opentelemetry-java-instrumentation
