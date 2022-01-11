@@ -25,8 +25,8 @@ class Reducer<T, V> {
                 .reducedBy(AverageSupport.Long::add);
     }
 
-    public static Reducer<AverageSupport.Float, Long> newFloatAverager(Path jfrFile){
-        return Reducer.<AverageSupport.Float, Long>forFile(jfrFile)
+    public static Reducer<AverageSupport.Float, Float> newFloatAverager(Path jfrFile){
+        return Reducer.<AverageSupport.Float, Float>forFile(jfrFile)
                 .withInitialValue(AverageSupport.Float.EMPTY)
                 .reducedBy(AverageSupport.Float::add);
     }
