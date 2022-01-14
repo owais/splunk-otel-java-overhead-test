@@ -4,6 +4,10 @@ This repository contains documentation, tools, and results concerning
 the impact on performance of the [Splunk distribution](https://github.com/signalfx/splunk-otel-java) of the 
 [OpenTelemetry Java Instrumentation Agent](https://github.com/open-telemetry/opentelemetry-java-instrumentation).
 
+# Dashboard
+
+A full dashboard with recent performance overhead data is available at https://signalfx.github.io/splunk-otel-java-overhead-test
+
 # Background
 
 Java instrumentation agents are bits of software that run inside the same JVM as 
@@ -140,10 +144,6 @@ for java 11 and is used across all tests.
   meaningful and consistent results, we have taken care to ensure that the microservice
   is not starved for resources and has satisfactory CPU and memory headroom to operate
   normally.
-
-# Conclusions
-
-TBD
 
 # Performing your own tests
 
