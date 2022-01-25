@@ -19,7 +19,7 @@ run-test:
     # This appears to provide an access token that does not work, so we have to fetch it ourselves.
     # - export VAULT_ACCESS_TOKEN=$(cat `creds-helper vault` | jq -j '.VAULT_TOKEN')
     - >
-        export VAULT_ACCESS_TOKEN=$(curl -qs -H 'X-Vault-Namespace: eeff/application' -X POST --data "{\"password\": \"${ORCA_PASSWORD\"}" https://secrets.splunkit.io/v1/auth/ldap/login/${ORCA_USERNAME} | jq -r '.auth.client_token')
+        export VAULT_ACCESS_TOKEN=$(curl -qs -H 'X-Vault-Namespace: eeff/application' -X POST --data "{\"password\": \"${ORCA_PASSWORD}\"}" https://secrets.splunkit.io/v1/auth/ldap/login/${ORCA_USERNAME} | jq -r '.auth.client_token')
     - mkdir -p ~/.orca
     - echo '[general]' > ~/.orca/orca.conf
     - echo "username = ${ORCA_USERNAME}" >> ~/.orca/orca.conf
