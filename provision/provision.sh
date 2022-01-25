@@ -7,6 +7,8 @@
 # * provisions externals via ansible
 # * provisions testbox via ansible
 
+set -e
+
 MYDIR=$(dirname $0)
 ANSIBLE_DIR="${MYDIR}/ansible"
 ${MYDIR}/bootstrap-orca.sh
