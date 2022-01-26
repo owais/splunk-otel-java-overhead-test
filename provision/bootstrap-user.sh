@@ -6,6 +6,8 @@
 MYDIR=$(dirname $0)
 ANSIBLE_DIR="${MYDIR}/ansible"
 
+echo "Bootstrapping user"
+cat ${MYDIR}/env.sh
 source ${MYDIR}/env.sh
 
 jinja2 \
