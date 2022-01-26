@@ -2,7 +2,7 @@
 stages:
   - run-test
 
-setup-orca:
+run-test:
   stage: run-test
   image:
     name: docker.repo.splunkdev.net/ci-cd/ci-container:python-3.9-aws
