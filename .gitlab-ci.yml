@@ -1,18 +1,16 @@
 
 stages:
-  - setup-orca
-  - provision
   - run-test
 
 setup-orca:
-  stage: setup-orca
+  stage: run-test
   image:
     name: docker.repo.splunkdev.net/ci-cd/ci-container:python-3.9-aws
-  script:
+  before_script:
     - python --version
     - pip install --upgrade pip jinja2-cli
     - pip install splunk-orca -i https://repo.splunk.com/artifactory/api/pypi/pypi/simple
-    - pip uninstall -y ansible && pip install ansible
+    - pip uninstall -y ansible && pip install ansible-core==2.12.1
     - orca --version
     - creds-helper init
     - ORCA_USERNAME_FILE=$(creds-helper kv ORCA_CREDENTIALS --key=username)
@@ -38,21 +36,10 @@ setup-orca:
     - echo "export DOCKER_CERT_PATH=$PWD" >> ~/.orca/env.sh
     - echo "export DOCKER_HOST=tcp://ucp.west.splunkeng.com:443" >> ~/.orca/env.sh
     - ssh-keygen -t rsa -N '' -m PEM -f /root/.orca/id_rsa
-
-provision:
-  stage: provision
-  image:
-    name: docker.repo.splunkdev.net/ci-cd/ci-container:python-3.9-aws
   script:
     - orca --cloud aws show deployments
     - ./provision/provision.sh
     - orca --cloud aws show deployments
-
-run-test:
-  stage: run-test
-  image:
-    name: docker.repo.splunkdev.net/ci-cd/ci-container:python-3.9-aws
-  script:
     - ./provision/start-remote-test.sh
     - sleep 300
     - ./check-test-progress.sh
