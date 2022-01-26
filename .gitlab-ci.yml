@@ -4,9 +4,11 @@ stages:
 
 run-test:
   stage: run-test
+#  when: manual
   image:
     name: docker.repo.splunkdev.net/ci-cd/ci-container:python-3.9-aws
   before_script:
+    - apt update && apt install -y rsync
     - python --version
     - pip install --upgrade pip jinja2-cli
     - pip install splunk-orca -i https://repo.splunk.com/artifactory/api/pypi/pypi/simple
@@ -39,6 +41,8 @@ run-test:
     - ssh-keygen -t rsa -N '' -m PEM -f /root/.orca/id_rsa
   script:
     - orca --cloud aws show deployments
+    # provisioning will not work if deployments already exist, so we purge here first.
+    - orca --cloud aws destroy --all
     - ./provision/provision.sh
     - orca --cloud aws show deployments
     - ./provision/start-remote-test.sh
