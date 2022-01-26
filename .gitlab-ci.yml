@@ -8,7 +8,7 @@ run-test:
     name: docker.repo.splunkdev.net/ci-cd/ci-container:python-3.9-aws
   before_script:
     - python --version
-    - pip install --upgrade pip jinja2-cli
+    - pip install --upgrade pip jinja2-cli ansible
     - pip install splunk-orca -i https://repo.splunk.com/artifactory/api/pypi/pypi/simple
     - orca --version
     - creds-helper init
