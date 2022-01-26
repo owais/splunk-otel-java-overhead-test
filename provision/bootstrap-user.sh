@@ -10,8 +10,7 @@ echo "Bootstrapping user"
 cat ${MYDIR}/env.sh
 source ${MYDIR}/env.sh
 
-ping -c 5 ${TESTBOX_HOST}
-ping -c 5 ${EXTERNALS_HOST}
+export ANSIBLE_HOST_KEY_CHECKING=False
 
 jinja2 \
     -D testbox_host=${TESTBOX_HOST} \
