@@ -10,6 +10,9 @@ echo "Bootstrapping user"
 cat ${MYDIR}/env.sh
 source ${MYDIR}/env.sh
 
+ping -c 5 ${TESTBOX_HOST}
+ping -c 5 ${EXTERNALS_HOST}
+
 jinja2 \
     -D testbox_host=${TESTBOX_HOST} \
     -D externals_host=${EXTERNALS_HOST} \
