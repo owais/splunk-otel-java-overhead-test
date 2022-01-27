@@ -35,4 +35,3 @@ EXTERNALS_HOST=$(getIP "externals")
 MYDIR=$(dirname $0)
 echo "export EXTERNALS_HOST=${EXTERNALS_HOST}" > "${MYDIR}/env.sh"
 echo "export TESTBOX_HOST=${TESTBOX_HOST}" >> "${MYDIR}/env.sh"
-
