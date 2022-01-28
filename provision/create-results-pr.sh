@@ -18,8 +18,7 @@ rm token.txt
 
 gh repo clone signalfx/splunk-otel-java-overhead-test github-clone
 cd github-clone
-git checkout gh-pages
-git checkout -b ${NEW_BRANCH}
+git checkout -b ${NEW_BRANCH} gh-pages
 cd ..
 
 echo "Setting up a new pull request for results data: ${REV} results"
