@@ -52,6 +52,6 @@ run-test:
     - orca --cloud aws show deployments
     - ./provision/start-remote-test.sh
     - sleep 30
-    - ./provision/wait-for-test-completion.sh
+    - ./provision/wait-for-test-complete.sh
     - ./provision/fetch-results.sh
     - ./provision/create-results-pr.sh
