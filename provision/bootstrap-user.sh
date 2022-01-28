@@ -3,18 +3,25 @@
 # sets up the initial ssh configuration so that subsequent ansible
 # operations use your ssh key
 
-source env.sh
+MYDIR=$(dirname $0)
+ANSIBLE_DIR="${MYDIR}/ansible"
+
+echo "Bootstrapping user"
+cat ${MYDIR}/env.sh
+source ${MYDIR}/env.sh
+
+export ANSIBLE_HOST_KEY_CHECKING=False
 
 jinja2 \
     -D testbox_host=${TESTBOX_HOST} \
     -D externals_host=${EXTERNALS_HOST} \
     -D ansible_user=root \
-    ansible/hosts.yml.jinja > ansible/root.hosts.yml
+    ${ANSIBLE_DIR}/hosts.yml.jinja > ${ANSIBLE_DIR}/root.hosts.yml
 
 jinja2 \
     -D testbox_host=${TESTBOX_HOST} \
     -D externals_host=${EXTERNALS_HOST} \
     -D ansible_user=splunk \
-    ansible/hosts.yml.jinja > ansible/hosts.yml
+    ${ANSIBLE_DIR}/hosts.yml.jinja > ${ANSIBLE_DIR}/hosts.yml
 
-ansible-playbook -i ansible/root.hosts.yml ansible/bootstrap-user.yml
+ansible-playbook -i ${ANSIBLE_DIR}/root.hosts.yml ${ANSIBLE_DIR}/bootstrap-user.yml

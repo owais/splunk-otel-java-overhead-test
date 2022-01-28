@@ -4,7 +4,9 @@
 # creates env.sh that contains the IP of each
 
 # assumes orca is set up through a very complicated shell environment in user profile. yep.
-source ${HOME}/.bash_profile
+if [ -f "${HOME}/.bash_profile" ] ; then
+  source ${HOME}/.bash_profile
+fi
 
 echo "!! PROVISIONING externals with orca !!"
 orca --cloud aws create \
@@ -33,4 +35,3 @@ EXTERNALS_HOST=$(getIP "externals")
 MYDIR=$(dirname $0)
 echo "export EXTERNALS_HOST=${EXTERNALS_HOST}" > "${MYDIR}/env.sh"
 echo "export TESTBOX_HOST=${TESTBOX_HOST}" >> "${MYDIR}/env.sh"
-
