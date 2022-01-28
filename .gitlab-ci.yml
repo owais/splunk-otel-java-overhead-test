@@ -48,4 +48,4 @@ run-test:
     - ./provision/start-remote-test.sh
     - sleep 30
     - ./provision/wait-for-test-complete.sh
-    - ./provision/fetch-results.sh.sh
+    - ./provision/fetch-results.sh
