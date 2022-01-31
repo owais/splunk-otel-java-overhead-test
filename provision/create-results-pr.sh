@@ -29,11 +29,7 @@ gpg2 --batch --passphrase '' --quick-gen-key /tmp/key.txt
 KEY_ID=$(gpg2 -K --keyid-format SHORT | grep '^ ' | tr -d ' ')
 git config --global user.signingKey ${KEY_ID}
 
-echo "${GITHUB_TOKEN}" > token.txt
-gh auth login --with-token < token.txt
-rm token.txt
-
-gh repo clone signalfx/splunk-otel-java-overhead-test github-clone
+git clone https://splunk-o11y-gdi-bot:"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git github-clone
 cd github-clone
 git checkout -b ${NEW_BRANCH} gh-pages
 cd ..
