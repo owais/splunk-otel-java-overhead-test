@@ -29,7 +29,8 @@ gpg2 --batch --passphrase '' --quick-gen-key /tmp/key.txt
 KEY_ID=$(gpg2 -K --keyid-format SHORT | grep '^ ' | tr -d ' ')
 git config --global user.signingKey ${KEY_ID}
 
-git clone https://splunk-o11y-gdi-bot:"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git github-clone
+#git clone https://splunk-o11y-gdi-bot:"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git github-clone
+git clone https://"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git github-clone
 cd github-clone
 git checkout gh-pages
 git checkout -b ${NEW_BRANCH}
