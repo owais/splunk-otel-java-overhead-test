@@ -48,7 +48,7 @@ git add results/${REV}/*
 echo "Committing changes..."
 git commit -S -am "Add test results: ${REV}"
 echo "Pushing results to remote branch ${NEW_BRANCH}"
-git push -u origin ${NEW_BRANCH}
+git push https://"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git ${NEW_BRANCH}
 
 MSG="[automated] Add test results: ${REV}"
 
