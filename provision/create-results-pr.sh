@@ -10,7 +10,7 @@ NEW_BRANCH="results_${REV}"
 set -e
 
 git config --global user.name overhead-results
-git config --global user.email overhead-results@users.noreply.github.com
+git config --global user.email olone+gdi-bot@splunk.com
 git config --global gpg.program gpg2
 
 echo "Creating a signing key"
@@ -20,7 +20,7 @@ Key-Length: 2048
 Subkey-Type: ELG-E
 Subkey-Length: 2048
 Name-Real: overhead-results
-Name-Email: overhead-results@users.noreply.github.com
+Name-Email: olone+gdi-bot@splunk.com
 Expire-Date: 0
 Passphrase: abc
 %commit
@@ -30,7 +30,6 @@ KEY_ID=$(gpg2 -K --keyid-format SHORT | grep '^ ' | tr -d ' ')
 git config --global user.signingKey ${KEY_ID}
 
 git clone https://splunk-o11y-gdi-bot:"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git github-clone
-#git clone https://"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git github-clone
 cd github-clone
 git checkout gh-pages
 git checkout -b ${NEW_BRANCH}
