@@ -1,0 +1,27 @@
+----------------------------------------------------------
+ Run at Thu Feb 03 19:14:06 UTC 2022
+ release_30vu_8500iter : multiple agent configurations compared
+ 30 users, 8500 iterations
+----------------------------------------------------------
+Agent               :              none      splunk-otel         profiler
+Run duration        :          00:02:56         00:03:03         00:03:14
+Avg. CPU (user)     :         0.3599634       0.43196577       0.45725864
+Max. CPU (user)     :         0.5833333       0.55369925        0.5644769
+Avg. CPU (system)   :        0.17756727       0.22405548       0.25685665
+Max. CPU (system)   :        0.21921182       0.27979276       0.31051344
+Avg. mch tot cpu    :          0.762708       0.88606966       0.94375664
+Startup time (ms)   :             21922            22806            22906
+Total allocated MB  :          55363.53        178553.26        778192.15
+Heap (min)          :          88331264        111572992        123207672
+Heap (max)          :         392826080        396929536        607473656
+Thread switch rate  :          36099.62        63747.504         70385.59
+GC time             :        2967612913       3488380466       5380903097
+GC pause time       :              3037             3576             5843
+Req. mean           :             12.96            25.08            33.55
+Req. p95            :             50.89           100.66           131.06
+Iter. mean          :            608.29           634.64           673.47
+Iter. p95           :            727.20           815.00           917.05
+Net read avg (bps)  :        9748600.00       9582116.00       9132570.00
+Net write avg (bps) :       13249254.00      50889104.00      52468238.00
+Peak threads        :                90               99              102
+Throughput (RPS)    :            886.97           850.32           801.28
