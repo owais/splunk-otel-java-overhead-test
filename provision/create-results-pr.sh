@@ -9,13 +9,6 @@ NEW_BRANCH="results_${REV}"
 
 set -e
 
-cat > /tmp/gg <<EOF
-#!/bin/bash
-
-gpg --passphrase \$(cat \${GPG_PASSWORD}) --batch --no-tty "\$@"
-EOF
-chmod 755 /tmp/gg
-
 echo ">>> Setting GnuPG configuration ..."
 mkdir -p ~/.gnupg
 chmod 700 ~/.gnupg
@@ -25,13 +18,13 @@ pinentry-mode loopback
 EOF
 
 echo ">>> Importing secret key ..."
-gpg --batch --allow-secret-key-import --import "${GPG_SECRET_KEY}"
+gpg --batch --allow-secret-key-import --import "${GITHUB_BOT_GPG_KEY}"
 
 echo ">>> Setting up git config options"
 GPG_KEY_ID=$(gpg2 -K --keyid-format SHORT | grep '^ ' | tr -d ' ')
 git config --global user.name overhead-results
 git config --global user.email olone+gdi-bot@splunk.com
-git config --global gpg.program /tmp/gg
+git config --global gpg.program gpg
 git config --global user.signingKey ${GPG_KEY_ID}
 
 git clone https://splunk-o11y-gdi-bot:"${GITHUB_TOKEN}"@github.com/signalfx/splunk-otel-java-overhead-test.git github-clone
