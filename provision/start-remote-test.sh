@@ -9,4 +9,4 @@ source ${MYDIR}/env.sh
 ssh -f -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" -o "LogLevel=ERROR"\
     -i ~/.orca/id_rsa \
     splunk@${TESTBOX_HOST} \
-    'screen -dm bash -c "./run-tests.sh 1; bash"'
+    'screen -dm bash -c "./run-tests.sh 10; bash"'
