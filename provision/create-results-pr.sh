@@ -18,7 +18,11 @@ pinentry-mode loopback
 EOF
 
 echo ">>> Importing secret key ..."
-gpg --batch --allow-secret-key-import --import "${GITHUB_BOT_GPG_KEY}"
+cat > /tmp/sk <<EOF
+${GITHUB_BOT_GPG_KEY}
+EOF
+gpg --batch --allow-secret-key-import --import /tmp/sk
+rm /tmp/sk
 
 echo ">>> Setting up git config options"
 GPG_KEY_ID=$(gpg2 -K --keyid-format SHORT | grep '^ ' | tr -d ' ')
