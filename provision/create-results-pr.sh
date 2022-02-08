@@ -42,7 +42,7 @@ echo "Setting up a new pull request for results data: ${REV} results"
 rsync -avv --progress "${RESULTS}/${REV}" github-clone/results/
 cd github-clone
 echo "Results list: " && ls -l results/
-ls -1 results/ | grep -v README > results/index.txt
+ls -1 results/ | grep -v README | grep -v index.txt > results/index.txt
 echo "Adding new files to changelist"
 git add results/index.txt
 git add results/${REV}/*
