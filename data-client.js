@@ -1,8 +1,9 @@
 
 // Returns a list of available historic runs
 async function getRuns(){
-    //TODO: Fetch from a static file
-    return Promise.resolve(['20220110_132900', '20211214_203544']);
+    return fetch(`results/index.txt`)
+        .then(resp => resp.text())
+        .then(body => body.split("\n").filter(x => x !== 'index.txt'));
 }
 
 async function getResults(name){
