@@ -17,3 +17,13 @@ async function getResults(name){
             return aggregated;
         });
 }
+
+async function getConfig(name){
+    const path = `results/${name}/config.json`;
+    return fetch(path)
+        .then(resp => resp.json())
+        .catch(e => {
+            console.log(`No such config found for ${path}`)
+            return {};
+    });
+}

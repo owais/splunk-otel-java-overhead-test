@@ -18,12 +18,86 @@ async function startOverhead() {
         });
 }
 
-function testRunChosen() {
+async function testRunChosen() {
     //TODO: Consider clearing/removing existing graphs first
     const value = document.getElementById('test-run').value;
     console.log(`selection changed ${value}`);
-    getResults(value)
-        .then(addCharts)
+    const config = await getConfig(value);
+    const results = await getResults(value)
+    addOverview(config);
+    addCharts(results);
+}
+
+function addOverview(config) {
+    const overview = document.getElementById('overview');
+    overview.innerHTML = '';
+    addMainOverview(overview, config);
+    addAgents(overview, config);
+}
+
+function addMainOverview(overview, config) {
+    const title = document.createElement('h4');
+    if(!config.name){
+        title.innerText = '<<unavailable>>';
+        overview.append(title);
+        return;
+    }
+    title.innerText = config.name;
+    const desc = document.createElement('p');
+    desc.innerText = config.description;
+    const list = document.createElement('ul');
+
+    addListItem(list, `<b>concurrent connections</b>: ${config.concurrentConnections}`);
+    addListItem(list, `<b>max rate</b>: ${config.maxRequestRate} rps`);
+    addListItem(list, `<b>script iterations</b>: ${config.totalIterations}`);
+    addListItem(list, `<b>warmup</b>: ${config.warmupSeconds}s`);
+
+    overview.append(title, desc, list);
+}
+
+function addAgents(overview, config) {
+    if(!config.agents) return;
+    config.agents.forEach(agent => {
+        const card = document.createElement('div');
+        card.classList.add('card', 'my-2');
+        card.style = 'width: 25rem;';
+        const body = document.createElement('div');
+        body.classList.add('card-body');
+        const title = document.createElement('h5')
+        title.classList.add('card-title');
+        title.innerText = `${MARKETING_NAMES[agent.name]} (${agent.name})`;
+        const subtitle = document.createElement('h6');
+        subtitle.classList.add('card-subtitle', 'mb-2', 'text-muted');
+        subtitle.innerText = agent.description;
+        const iconLink = document.createElement('a');
+        iconLink.classList.add('float-end', agent.url ? 'text-primary' : 'text-secondary');
+        iconLink.href = agent.url || '#';
+        const icon = document.createElement('i');
+        icon.classList.add('bi', 'bi-bookmark-check-fill', 'mx-2');
+        iconLink.append(icon);
+        body.append(iconLink);
+        body.append(title);
+        body.append(subtitle);
+        card.append(body);
+        overview.append(card);
+        if(agent.additionalJvmArgs.length > 0){
+            const p = document.createElement('p');
+            p.innerText = 'Extra JVM args:';
+            body.append(p)
+            const args = document.createElement('ul');
+            agent.additionalJvmArgs.forEach(arg => {
+                addListItem(args, arg, ['font-monospace', 'jvmarg']);
+            });
+            body.append(args);
+        }
+    });
+}
+
+function addListItem(list, text, classes = []) {
+    const li = document.createElement('li')
+    classes.forEach(c => li.classList.add(c));
+    li.innerHTML = text;
+    list.append(li);
 }
 
 function populateRunsDropDown(runNames) {
