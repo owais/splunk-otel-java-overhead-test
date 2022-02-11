@@ -27,6 +27,7 @@ public class MainResultsPersister implements ResultsPersister {
     new ConsoleResultsPersister().write(results);
     new FileSummaryPersister(outputDir.resolve("summary.txt")).write(results);
     new CsvPersister(outputDir.resolve("results.csv")).write(results);
+    new ConfigPersister(outputDir.resolve("config.json")).write(config);
   }
 
   private void ensureCreated(Path outputDir) {

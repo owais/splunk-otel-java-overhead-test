@@ -10,6 +10,7 @@
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/chartist-plugin-axistitle@0.0.7/dist/chartist-plugin-axistitle.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/chartist-plugin-barlabels@0.0.5/dist/chartist-plugin-barlabels.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="overhead.css">
     <script src="data-client.js"></script>
     <script src="data-util.js"></script>
@@ -39,6 +40,7 @@
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="position-sticky pt-5">
                 <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link link-dark" href="#a-overview">Config/Overview</a></li>
                     <li class="nav-item"><a class="nav-link link-dark" href="#a-startup">Startup Time</a></li>
                     <li class="nav-item"><a class="nav-link link-dark" href="#a-avgcpu">Average CPU (user)</a></li>
                     <li class="nav-item"><a class="nav-link link-dark" href="#a-maxcpu">Max CPU (user)</a></li>
@@ -64,6 +66,13 @@
             </div>
         </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="container-fluid">
+                <a id="a-overview"></a>
+                <h2>Config/Overview</h2>
+                <div class="mx-3" id="overview">
+                </div>
+            </div>
+
             <div class="container-fluid">
                 <a id="a-startup"></a>
                 <h2 class="mx-5 px-5">Startup time</h2>
