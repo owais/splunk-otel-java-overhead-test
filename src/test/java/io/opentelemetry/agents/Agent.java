@@ -15,12 +15,12 @@ public class Agent {
   public final static Agent LATEST_UPSTREAM_RELEASE = new Agent("latest", "latest mainstream release", OTEL_LATEST);
   public final static Agent LATEST_UPSTREAM_SNAPSHOT = new Agent("snapshot", "latest available snapshot version from main");
 
-  private final static String SPLUNK_AGENT_URL = "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.7.1/splunk-otel-javaagent-1.7.1-all.jar";
-  private final static String SPLUNK_SNAPSHOT_AGENT_URL = "https://oss.sonatype.org/content/repositories/snapshots/com/splunk/splunk-otel-javaagent/1.5.0-SNAPSHOT/splunk-otel-javaagent-1.5.0-20211006.190447-25.jar";
+  private final static String SPLUNK_AGENT_URL = "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.8.0/splunk-otel-javaagent-1.8.0.jar";
+  private final static String SPLUNK_SNAPSHOT_AGENT_URL = "https://oss.sonatype.org/content/repositories/snapshots/com/splunk/splunk-otel-javaagent/1.0.0-SNAPSHOT/splunk-otel-javaagent-1.5.0-20211006.190447-25.jar";
 
-  public final static Agent SPLUNK_OTEL = new Agent("splunk-otel", "splunk-otel-java 1.7.1",
+  public final static Agent SPLUNK_OTEL = new Agent("splunk-otel", "splunk-otel-java 1.8.0",
           SPLUNK_AGENT_URL);
-  public final static Agent SPLUNK_PROFILER = new Agent("profiler", "splunk-otel-java 1.7.1 w/ profiler",
+  public final static Agent SPLUNK_PROFILER = new Agent("profiler", "splunk-otel-java 1.8.0 w/ profiler",
           SPLUNK_AGENT_URL,
           List.of("-Dsplunk.profiler.enabled=true"));
   public final static Agent SPLUNK_PROFILER_W_TLAB_1SS = new Agent("profiler-tlab-1ss", "splunk-otel-java 1.6.0",
