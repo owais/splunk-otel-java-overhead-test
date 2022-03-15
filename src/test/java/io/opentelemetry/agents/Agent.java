@@ -14,7 +14,7 @@ public class Agent {
   public final static Agent NONE = new Agent("none", "no agent at all", null);
   public final static Agent LATEST_UPSTREAM_SNAPSHOT = new Agent("snapshot", "latest available snapshot version from main");
 
-  private final static String SPLUNK_AGENT_URL = "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.8.0/splunk-otel-javaagent-1.9.0.jar";
+  private final static String SPLUNK_AGENT_URL = "https://repo1.maven.org/maven2/com/splunk/splunk-otel-javaagent/1.9.0/splunk-otel-javaagent-1.9.0.jar";
 
   public final static Agent SPLUNK_OTEL = new Agent("splunk-otel", "splunk-otel-java 1.9.0",
           SPLUNK_AGENT_URL);
